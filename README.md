@@ -11,4 +11,5 @@ UPDATE  `creablog`.`wp_options` SET  `option_value` =  '[LE_NOUVEAU_PATH]' WHERE
 UPDATE  `creablog`.`wp_options` SET  `option_value` =  '[LE_NOUVEAU_PATH]' WHERE  `wp_options`.`option_id` =2;  
 ```
 
-###### Tips
+###### Tips  
+Élargir les droits pour permettre les mises à jours automatiques  

@@ -1,9 +1,9 @@
 === WordPress REST API (Version 2) ===
 Contributors: rmccue, rachelbaker, danielbachhuber, joehoyle
 Tags: json, rest, api, rest-api
-Requires at least: 4.4
-Tested up to: 4.5-alpha
-Stable tag: 2.0-beta12.1
+Requires at least: 4.6
+Tested up to: 4.7-alpha
+Stable tag: 2.0-beta15
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,9 +16,9 @@ This plugin provides an easy to use REST API, available via HTTP. Grab your site
 
 Want to get your site's posts? Simply send a `GET` request to `/wp-json/wp/v2/posts`. Update user with ID 4? Send a `PUT` request to `/wp-json/wp/v2/users/4`. Get all posts with the search term "awesome"? `GET /wp-json/wp/v2/posts?filter[s]=awesome`. It's that easy.
 
-WP API exposes a simple yet easy interface to WP Query, the posts API, post meta API, users API, revisions API and many more. Chances are, if you can do it with WordPress, WP API will let you do it.
+The WordPress REST API exposes a simple yet easy interface to WP Query, the posts API, post meta API, users API, revisions API and many more. Chances are, if you can do it with WordPress, the API will let you do it.
 
-WP API also includes an easy-to-use Javascript API based on Backbone models, allowing plugin and theme developers to get up and running without needing to know anything about the details of getting connected.
+The REST API also includes an easy-to-use JavaScript API based on Backbone models, allowing plugin and theme developers to get up and running without needing to know anything about the details of getting connected.
 
 Check out [our documentation][docs] for information on what's available in the API and how to use it. We've also got documentation on extending the API with extra data for plugin and theme developers!
 
@@ -38,9 +38,153 @@ Once you've installed and activated the plugin, [check out the documentation](ht
 
 == Changelog ==
 
-= 2.0 Beta 12.1 (May 25, 2016) =
+= 2.0 Beta 15.0 (October 07, 2016) =
 
-* SECURITY: Return error when request can't context==edit for users.
+* Introduce support for Post Meta, Term Meta, User Meta, and Comment Meta in
+their parent endpoints.
+
+  For your meta fields to be exposed in the REST API, you need to register
+  them. WordPress includes a `register_meta()` function which is not usually
+  required to get/set fields, but is required for API support.
+
+  To register your field, simply call register_meta and set the show_in_rest
+  flag to true. Note: register_meta must be called separately for each meta
+  key.
+
+  (props @rmccue, @danielbachhuber, @kjbenk, @duncanjbrown, [#2765][gh-2765])
+
+* Introduce Settings endpoint.
+
+  Expose options to the REST API with the `register_setting()` function, by
+  passing `$args = array( 'show_in_rest' => true )`. Note: WordPress 4.7 is
+  required. See changeset [38635][https://core.trac.wordpress.org/changeset/38635].
+
+  (props @joehoyle, @fjarrett, @danielbachhuber, @jonathanbardo,
+  @greatislander, [#2739][gh-2739])
+
+* Attachments controller, change permissions check to match core.
+
+  Check for the `upload_files` capability when creating an attachment.
+
+  (props @nullvariable, @adamsilverstein, [#2743][gh-2743])
+
+* Add `?{taxonomy}_exclude=` query parameter
+
+  This mirrors our existing support for ?{taxonomy}= filtering in the posts
+  controller (which allows querying for only records with are associated with
+  any of the provided term IDs for the specified taxonomy) by adding an
+  equivalent `_exclude` variant to list IDs of terms for which associated posts
+  should NOT be returned.
+
+  (props @kadamwhite, [#2756][gh-2756])
+
+* Use `get_comment_type()` when comparing updating comment status.
+
+  Comments having a empty `comment_type` within WordPress bites us again.
+  Fixes a bug where comments could not be updated because of bad comparison
+  logic.
+
+  (props @joehoyle, [#2753][gh-2753])
+
+[gh-2765]: https://github.com/WP-API/WP-API/issues/2765
+[gh-2739]: https://github.com/WP-API/WP-API/issues/2739
+[gh-2743]: https://github.com/WP-API/WP-API/issues/2743
+[gh-2756]: https://github.com/WP-API/WP-API/issues/2756
+[gh-2753]: https://github.com/WP-API/WP-API/issues/2753
+
+= 2.0 Beta 13.0 (March 29, 2016) =
+
+* BREAKING CHANGE: Fix Content-Disposition header parsing.
+
+  Allows regular form submissions from HTML forms, as well as properly formatted HTTP requests from clients. Note: this breaks backwards compatibility, as previously, the header parsing was completely wrong.
+
+  (props @rmccue, [#2239](https://github.com/WP-API/WP-API/pull/2239))
+
+* BREAKING CHANGE: Use compact links for embedded responses if they are available.
+
+  Introduces curies for sites running WordPress 4.5 or greater; no changes for those running WordPress 4.4.
+
+  (props @joehoyle, [#2412](https://github.com/WP-API/WP-API/pull/2412))
+
+* JavaScript client updates:
+
+  * Support lodash, plus older and newer underscore: add an alias for `_.contains`
+  * Add args and options on the model/collection prototypes
+  * Rework category/tag mixins to support new API structure
+  * Add workaround for the null/empty values returned by the API when creating a new post * these values are not accepted for subsequent updates/saves, so explicitly excluding them. See https://github.com/WP-API/WP-API/pull/2393
+  * Better handling of the (special) `me` endpoint
+  * Schema parsing cleanup
+  * Introduce `wp.api.loadPromise` so developers can ensure api load complete before using
+
+  (props @adamsilverstein, [#2403](https://github.com/WP-API/WP-API/pull/2403))
+
+* Only adds alternate link header for publicly viewable CPTs.
+
+  (props @bradyvercher, [#2387](https://github.com/WP-API/WP-API/pull/2387))
+
+* Adds `roles` param for `GET /wp/v2/users`.
+
+  (props @BE-Webdesign, [#2372](https://github.com/WP-API/WP-API/pull/2372))
+
+* Declares `password` in user schema, but never displays it.
+
+  (props @danielbachhuber, [#2386](https://github.com/WP-API/WP-API/pull/2386))
+
+* Permits `edit` context for requests which can edit the user.
+
+  (props @danielbachhuber, [#2383](https://github.com/WP-API/WP-API/pull/2383))
+
+* Adds `rest_pre_insert_{$taxonomy}` filter for terms.
+
+  (props @kjbenk, [#2377](https://github.com/WP-API/WP-API/pull/2377))
+
+* Supports taxonomy collection args on posts endpoint.
+
+  (props @joehoyle, [#2287](https://github.com/WP-API/WP-API/pull/2287))
+
+* Removes post meta link from post response.
+
+  (props @joehoyle, [#2288](https://github.com/WP-API/WP-API/pull/2288))
+
+* Registers `description` attribute when registering args from schema.
+
+  (props @danielbachhuber, [#2362](https://github.com/WP-API/WP-API/pull/2362))
+
+* Uses `$comment` from the database with `rest_insert_comment` action.
+
+  (props @danielbachhuber, [#2349](https://github.com/WP-API/WP-API/pull/2349))
+
+* Removes unnecessary global variables from users controller.
+
+  (props @claudiosmweb, [#2335](https://github.com/WP-API/WP-API/pull/2335))
+
+* Ensures `GET /wp/v2/categories` with out of bounds offset doesn't return results.
+
+  (props @danielbachhuber, [#2313](https://github.com/WP-API/WP-API/pull/2313))
+
+* Adds top-level support for date queries on posts and comments.
+
+  (props @BE-Webdesign, [#2266](https://github.com/WP-API/WP-API/pull/2266), [#2291](https://github.com/WP-API/WP-API/pull/2291))
+
+* Respects `show_avatars` setting for comments.
+
+  (props @BE-Webdesign, [#2271](https://github.com/WP-API/WP-API/pull/2271))
+
+* Uses cached `get_the_terms()` for terms-for-post for better performance.
+
+  (props @rmccue, [#2257](https://github.com/WP-API/WP-API/pull/2257))
+
+* Ensures comments search is an empty string.
+
+  (props @rmccue, [#2256](https://github.com/WP-API/WP-API/pull/2256))
+
+* If no title is provided in create attachment request or file metadata, falls back to filename.
+
+  (props @danielbachhuber, [#2254](https://github.com/WP-API/WP-API/pull/2254))
+
+* Removes unused `$img_url_basename` variable in attachments controller.
+
+  (props @danielbachhuber, [#2250](https://github.com/WP-API/WP-API/pull/2250))
 
 = 2.0 Beta 12.0 (February 9, 2016) =
 

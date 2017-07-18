@@ -557,12 +557,6 @@ $meta_boxes[] = array(
 				'type' => 'kad_gallery',
 			),
 			array(
-				'name' => __('If Cyclone Slider', 'virtue-toolkit'),
-				'desc' => __('Paste Cyclone slider shortcode here (example: [cycloneslider id="slider1"])', 'virtue-toolkit'),
-				'id'   => $prefix . 'shortcode_slider',
-				'type' => 'textarea_code',
-			),
-			array(
 				'name' => __('Max Image/Slider Height', 'virtue-toolkit'),
 				'desc' => __('Default is: 400 (Note: just input number, example: 350)', 'virtue-toolkit'),
 				'id'   => $prefix . 'posthead_height',
@@ -626,7 +620,7 @@ $meta_boxes[] = array(
 			),
 			array(
                 'name' => __('Use Map', 'virtue-toolkit'),
-                'desc' => '',
+                'desc' => __('You need free api for google maps to work, add in the theme options > misc settings.',  'virtue-toolkit'),
                 'id' => $prefix .'contact_map',
                 'type'    => 'select',
 				'options' => array(
@@ -1061,7 +1055,7 @@ $meta_boxes[] = array(
 			),
 			array(
                 'name' => __('Use Map', 'virtue-toolkit'),
-                'desc' => '',
+                'desc' => __('You need free api for google maps to work, add in the theme options > misc settings.',  'virtue-toolkit'),
                 'id' => $prefix .'contact_map',
                 'type'    => 'select',
 				'options' => array(
@@ -1150,4 +1144,264 @@ function initialize_kadence_toolkit_meta_boxes() {
 		require_once 'cmb/init.php';
 	}
 
+}
+
+function kt_toolkit_ascend_gallery_field( $field, $meta ) {
+    echo '<div class="kad-gallery kad_widget_image_gallery">';
+    echo '<div class="gallery_images">';
+    $attachments = array_filter( explode( ',', $meta ) );
+            if ( $attachments ) :
+                foreach ( $attachments as $attachment_id ) {
+                    $img = wp_get_attachment_image_src($attachment_id, 'thumbnail');
+                    $imgfull = wp_get_attachment_image_src($attachment_id, 'full');
+                    echo '<a class="of-uploaded-image edit-kt-meta-gal" data-attachment-id="'.esc_attr($attachment_id).'"  href="#">';
+                    echo '<img class="gallery-widget-image" id="gallery_widget_image_'.esc_attr($attachment_id). '" src="' . esc_url($img[0]) . '" width="'.esc_attr($img[1]).'" height="'.esc_attr($img[2]).'" />';
+                    echo '</a>';
+                }
+            endif;
+    echo '</div>';
+    echo ' <input type="hidden" id="' . esc_attr($field->args( 'id' )) . '" name="' . esc_attr($field->args( 'id' )) . '" class="gallery_values" value="' . esc_attr($meta) . '" />';
+    echo '<a href="#" onclick="return false;" id="edit-gallery" class="gallery-attachments button button-primary">' . __('Add/Edit Gallery', 'virtue-toolkit') . '</a>';
+    echo '<a href="#" onclick="return false;" id="clear-gallery" class="gallery-attachments button">' . __('Clear Gallery', 'virtue-toolkit') . '</a>';
+    echo '</div>';
+    $desc = $field->args('desc');
+    if ( !empty( $desc)) {
+        echo '<p class="cmb_metabox_description">' . $field->args( 'desc' ) . '</p>';
+    }
+}
+add_filter( 'cmb2_render_kad_gallery', 'kt_toolkit_ascend_gallery_field', 10, 2 );
+
+add_filter( 'cmb2_admin_init', 'kt_toolkit_ascend_metabox');
+function kt_toolkit_ascend_metabox() {
+	$prefix = '_kad_';
+	// GALLERY POST
+	$kt_gallery_post = new_cmb2_box( array(
+		'id'         	=> 'gallery_post_metabox',
+		'title'      	=> __("Gallery Post Options", 'virtue-toolkit'),
+		'object_types'	=> array( 'post'),
+		'priority'   	=> 'high',
+	) );
+	
+	$kt_gallery_post->add_field( array(
+		'name'    => __("Post Head Content", 'virtue-toolkit' ),
+		'desc'    => '',
+		'id'      => $prefix . 'gallery_blog_head',
+		'type'    => 'select',
+		'options' => array(
+			'default' 			=> __("Gallery Post Default", 'virtue-toolkit' ),
+			'flex' 				=> __("Image Slider - (Cropped Image Ratio)", 'virtue-toolkit' ),
+			'carouselslider' 	=> __("Image Slider - (Different Image Ratio)", 'virtue-toolkit' ),
+			'thumbslider' 		=> __("Image Slider with thumbnails - (Cropped Image Ratio)", 'virtue-toolkit' ),
+			'imgcarousel' 		=> __("Image Carousel - (Muiltiple Images Showing At Once)", 'virtue-toolkit' ),
+			'gallery' 			=> __("Image Collage - (Use 2 to 5 images)", 'virtue-toolkit' ),
+			'shortcode' 		=> __("Shortcode", 'virtue-toolkit' ),
+			'none' 				=> __("None", 'virtue-toolkit' ),
+			),
+	) );
+	$kt_gallery_post->add_field( array(
+		'name' => __("Post Slider Gallery", 'virtue-toolkit' ),
+		'desc' => __("Add images for gallery here - Use large images", 'virtue-toolkit' ),
+		'id'   => $prefix . 'image_gallery',
+		'type' => 'kad_gallery',
+	) );
+
+	$kt_gallery_post->add_field( array(
+		'name' => __('Gallery Post Shortcode', 'virtue-toolkit'),
+		'desc' => __('If using shortcode place here.', 'virtue-toolkit'),
+		'id'   => $prefix . 'post_gallery_shortcode',
+		'type' => 'textarea_code',
+	) );
+	$kt_gallery_post->add_field( array(
+		'name' => __("Max Slider/Image Height", 'virtue-toolkit' ),
+		'desc' => __("Note: just input number, example: 350", 'virtue-toolkit' ),
+		'id'   => $prefix . 'gallery_posthead_height',
+		'type' => 'text_small',
+	) );
+	$kt_gallery_post->add_field( array(
+		'name' => __("Max Slider/Image Width", 'virtue-toolkit' ),
+		'desc' => __("Note: just input number, example: 650", 'virtue-toolkit' ),
+		'id'   => $prefix . 'gallery_posthead_width',
+		'type' => 'text_small',
+	) );
+	$kt_gallery_post->add_field( array(
+		'name'    => __("Post Summary", 'virtue-toolkit' ),
+		'desc'    => '',
+		'id'      => $prefix . 'gallery_post_summery',
+		'type'    => 'select',
+		'options' => array(
+			'default' 			=> __('Gallery Post Default', 'virtue-toolkit' ),
+			'img_portrait' 		=> __('Portrait Image (feature image)', 'virtue-toolkit'),
+			'img_landscape' 	=> __('Landscape Image (feature image)', 'virtue-toolkit'),
+			'slider_portrait' 	=> __('Portrait Image Slider', 'virtue-toolkit'),
+			'slider_landscape' 	=> __('Landscape Image Slider', 'virtue-toolkit'),
+			'gallery_grid' 		=> __('Photo Collage - (Use 2 to 5 images)', 'virtue-toolkit'),
+			),
+	) );
+	// VIDEO POST
+	$kt_video_post = new_cmb2_box( array(
+		'id'         	=> 'video_post_metabox',
+		'title'      	=> __("Video Post Options", 'virtue-toolkit'),
+		'object_types'  => array( 'post'),
+		'priority'   	=> 'high',
+	) );
+	$kt_video_post->add_field( array(
+		'name'    => __("Post Head Content", 'virtue-toolkit' ),
+		'desc'    => '',
+		'id'      => $prefix . 'video_blog_head',
+		'type'    => 'select',
+		'options' => array(
+			'default' 	=> __("Video Post Default", 'virtue-toolkit' ),
+			'video' 	=> __("Video", 'virtue-toolkit' ),
+			'none' 		=> __("None", 'virtue-toolkit' ),
+			),
+	) );
+
+	$kt_video_post->add_field( array(
+		'name' => __('Video post embed', 'virtue-toolkit'),
+		'desc' => __('Place url, embed code or shortcode, works with youtube, vimeo. (Use the featured image for screen shot)', 'virtue-toolkit'),
+		'id'   => $prefix . 'post_video',
+		'type' => 'textarea_code',
+	) );
+	$kt_video_post->add_field( array(
+		'name' => __("Video Meta Title", 'virtue-toolkit' ),
+		'desc' => __("Used for SEO purposes", 'virtue-toolkit' ),
+		'id'   => $prefix . 'video_meta_title',
+		'type' => 'text',
+	) );
+	$kt_video_post->add_field( array(
+		'name' => __("Video Meta description", 'virtue-toolkit' ),
+		'desc' => __("Used for SEO purposes", 'virtue-toolkit' ),
+		'id'   => $prefix . 'video_meta_description',
+		'type' => 'text',
+	) );
+	$kt_video_post->add_field( array(
+		'name' => __("Max Video Width", 'virtue-toolkit' ),
+		'desc' => __("Note: just input number, example: 650", 'virtue-toolkit' ),
+		'id'   => $prefix . 'video_posthead_width',
+		'type' => 'text_small',
+	) );
+	$kt_video_post->add_field( array(
+		'name'    => __("Post Summary", 'virtue-toolkit' ),
+		'desc'    => '',
+		'id'      => $prefix . 'video_post_summery',
+		'type'    => 'select',
+		'options' => array(
+			'default' 		=> __('Video Post Default', 'virtue-toolkit' ),
+			'video' 		=> __('Video - (when possible)', 'virtue-toolkit'),
+			'img_portrait' 	=> __('Portrait Image (feature image)', 'virtue-toolkit'),
+			'img_landscape' => __('Landscape Image (feature image)', 'virtue-toolkit'),
+			),
+	) );
+	// Quote
+	$kt_quote_post = new_cmb2_box( array(
+		'id'         	=> 'quote_post_metabox',
+		'title'      	=> __("Quote Post Options", 'virtue-toolkit'),
+		'object_types'  => array( 'post'),
+		'priority'   	=> 'high',
+	) );
+	$kt_quote_post->add_field( array(
+		'name' => __("Quote author", 'virtue-toolkit' ),
+		'id'   => $prefix . 'quote_author',
+		'type' => 'text',
+	) );
+
+	// Portfolio
+	$kt_portfolio_post = new_cmb2_box( array(
+		'id'         	=> 'portfolio_post_metabox',
+		'title'      	=> __("Portfolio Options", 'virtue-toolkit'),
+		'object_types'  => array('portfolio'),
+		'priority'   	=> 'high',
+	) );
+	$kt_portfolio_post->add_field( array(
+		'name'    => __('Project Layout', 'virtue-toolkit'),
+		'desc'    => '',
+		'id'      => $prefix . 'ppost_layout',
+		'type'    => 'radio_inline',
+		'options' => array(
+			'default' 		=> __("Default", 'virtue-toolkit' ),
+			'beside' 		=> __("Beside 40%", 'virtue-toolkit' ),
+			'besidesmall' 	=> __("Beside 33%", 'virtue-toolkit' ),
+			'above' 		=> __("Above", 'virtue-toolkit' ),
+		),
+	) );
+	$kt_portfolio_post->add_field( array(
+		'name'    => __('Project Options', 'virtue-toolkit'),
+		'desc'    => '',
+		'id'      => $prefix . 'ppost_type',
+		'type'    => 'select',
+		'options' => array(
+			'image' 			=> __("Image", 'virtue-toolkit' ),
+			'flex' 				=> __("Image Slider (Cropped Image Ratio)", 'virtue-toolkit' ),
+			'carouselslider' 	=> __("Image Slider - (Different Image Ratio)", 'virtue-toolkit' ),
+			'thumbslider' 		=> __("Image Slider with thumbnails (Cropped Image Ratio)", 'virtue-toolkit' ),
+			'imgcarousel' 		=> __("Image Carousel - (Muiltiple Images Showing At Once)", 'virtue-toolkit' ),
+			'collage' 			=> __("Image Collage - (Use 2 to 5 images)", 'virtue-toolkit' ),
+			'imagegrid' 		=> __("Image Grid", 'virtue-toolkit' ),
+			'video' 			=> __("Video", 'virtue-toolkit' ),
+			'none' 				=> __("None", 'virtue-toolkit' ),
+		),
+	) );
+	$kt_portfolio_post->add_field( array(
+		'name'    => __('Columns', 'virtue-toolkit'),
+		'desc'    => '',
+		'id'      => $prefix . 'portfolio_img_grid_columns',
+		'type'    => 'select',
+		'default' => '3',
+		'options' => array(
+			'2' 		=> __("Two Columns", 'virtue-toolkit' ),
+			'3' 		=> __("Three Columns", 'virtue-toolkit' ),
+			'4' 		=> __("Four Columns", 'virtue-toolkit' ),
+			'5' 		=> __("Five Columns", 'virtue-toolkit' ),
+			'6' 		=> __("Six Columns", 'virtue-toolkit' ),
+		),
+	) );
+	$kt_portfolio_post->add_field( array(
+		'name' => __("Portfolio Image Gallery", 'virtue-toolkit' ),
+		'desc' => __("Add images for gallery here - Use large images", 'virtue-toolkit' ),
+		'id'   => $prefix . 'image_gallery',
+		'type' => 'kad_gallery',
+	) );
+	$kt_portfolio_post->add_field( array(
+		'name' => __('Video embed', 'virtue-toolkit'),
+		'desc' => __('Place url, embed code or shortcode, works with youtube, vimeo. (Use the featured image for screen shot)', 'virtue-toolkit'),
+		'id'   => $prefix . 'post_video',
+		'type' => 'textarea_code',
+	) );
+	$kt_portfolio_post->add_field( array(
+		'name' => __("Max Slider/Image Width", 'virtue-toolkit' ),
+		'desc' => __("Note: just input number, example: 650", 'virtue-toolkit' ),
+		'id'   => $prefix . 'portfolio_slider_width',
+		'type' => 'text_small',
+	) );
+	$kt_portfolio_post->add_field( array(
+		'name' => __("Max Slider/Image Height", 'virtue-toolkit' ),
+		'desc' => __("Note: just input number, example: 350", 'virtue-toolkit' ),
+		'id'   => $prefix . 'portfolio_slider_height',
+		'type' => 'text_small',
+	) );
+	// Portfolio Carousel
+	$kt_portfolio_carousel = new_cmb2_box( array(
+		'id'         	=> 'portfolio_post_carousel_metabox',
+		'title'      	=> __("Portfolio Bottom Carousel Options", 'virtue-toolkit'),
+		'object_types'  => array('portfolio'),
+		'priority'   	=> 'high',
+	) );
+	$kt_portfolio_carousel->add_field( array(
+		'name' => __('Carousel Title', 'virtue-toolkit'),
+		'desc' => __('ex. Similar Projects', 'virtue-toolkit'),
+		'id'   => $prefix . 'portfolio_carousel_title',
+		'type' => 'text_medium',
+	));
+	$kt_portfolio_carousel->add_field( array(
+		'name' => __('Bottom Portfolio Carousel', 'virtue-toolkit'),
+		'desc' => __('Display a carousel with portfolio items below project?', 'virtue-toolkit'),
+		'id'   => $prefix . 'portfolio_carousel',
+		'type'    => 'select',
+		'options' => array(
+			'default' 		=> __("Default", 'virtue-toolkit' ),
+			'related' 		=> __("Related Post Carousel", 'virtue-toolkit' ),
+			'recent' 		=> __("Recent Portfolio Carousel", 'virtue-toolkit' ),
+			'none' 	=> __("No Carousel", 'virtue-toolkit' ),
+		),
+	));
 }
