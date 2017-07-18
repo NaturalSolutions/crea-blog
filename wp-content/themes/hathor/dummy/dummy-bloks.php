@@ -18,7 +18,7 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec rhoncus risus. In ultrices lacinia ipsum, posuere faucibus velit bibendum ac.</p>
     
         </div>
-       <a style="margin-left:26%" href="#" class="midbutton">show me details</a>
+       <a  href="#" class="midbutton">show me details</a>
         </div>
         
         
@@ -47,7 +47,7 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec rhoncus risus. In ultrices lacinia ipsum, posuere faucibus velit bibendum ac.</p>
     
         </div>
-       <a style="margin-left:26%" href="#" class="midbutton">show me details</a>
+       <a  href="#" class="midbutton">show me details</a>
         </div>
         
         
@@ -74,7 +74,7 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec rhoncus risus. In ultrices lacinia ipsum, posuere faucibus velit bibendum ac.</p>
     
         </div>
-       <a style="margin-left:26%" href="#" class="midbutton">show me details</a>
+       <a  href="#" class="midbutton">show me details</a>
         </div>
         
         
@@ -99,7 +99,7 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec rhoncus risus. In ultrices lacinia ipsum, posuere faucibus velit bibendum ac.</p>
     
         </div>
-       <a style="margin-left:26%" href="#" class="midbutton">show me details</a>
+       <a  href="#" class="midbutton">show me details</a>
         </div>
         
         

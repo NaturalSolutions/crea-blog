@@ -54,7 +54,7 @@
     <div id="content" class="container homepagecontent">
    		<div class="row">
           	<div class="main <?php echo esc_attr(kadence_main_class()); ?>" role="main">
-          	<div class="entry-content" itemprop="mainContentOfPage">
+          	<div class="entry-content" itemprop="mainContentOfPage" itemscope itemtype="http://schema.org/WebPageElement">
 
       		<?php if(isset($virtue['homepage_layout']['enabled'])) { 
       			$layout = $virtue['homepage_layout']['enabled']; 

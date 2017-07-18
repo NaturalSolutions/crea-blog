@@ -27,14 +27,6 @@ jQuery(window).load(function($) {
 
 
 
-
-
-
-
-
-
-
-
 	//Comment Form
 jQuery('.comment-form-author, .comment-form-email, .comment-form-url').wrapAll('<div class="field_wrap" />');
 
@@ -60,11 +52,6 @@ jQuery("#cancel-comment-reply-link").click(function () {
 	
 });
 
-
-
-
-
-	
 
 
 

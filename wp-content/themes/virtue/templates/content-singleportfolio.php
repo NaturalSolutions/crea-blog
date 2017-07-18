@@ -1,26 +1,35 @@
+<?php
+/*
+* Single Portfolio Content
+*/
+
+ global $post, $virtue;
+?>
 <div id="pageheader" class="titleclass">
 		<div class="container">
 			<div class="page-header">
 				<div class="portfolionav clearfix">
-   			<?php kadence_previous_post_link_plus( array('order_by' => 'menu_order', 'loop' => true, 'format' => '%link', 'link' => '<i class="icon-chevron-left"></i>') ); ?>
-   			<?php global $virtue; if( !empty($virtue['portfolio_link'])){ ?>
-					 <a href="<?php echo get_page_link($virtue["portfolio_link"]); ?>">
-				<?php } else {?> 
-				<a href="../">
-				<?php } ?>
-   				<i class="icon-th"></i></a> 
-   				<?php kadence_next_post_link_plus( array('order_by' => 'menu_order', 'loop' => true, 'format' => '%link', 'link' => '<i class="icon-chevron-right"></i>') ); ?>
-   				<span>&nbsp;</span>
-   			</div>
+	   				<?php 
+	   				kadence_previous_post_link_plus( array('order_by' => 'menu_order', 'loop' => true, 'format' => '%link', 'link' => '<i class="icon-chevron-left"></i>') ); 
+	   			 	if( !empty($virtue['portfolio_link'])){ ?>
+						 <a href="<?php echo get_page_link($virtue["portfolio_link"]); ?>">
+					<?php } else {?> 
+						<a href="../">
+					<?php } ?>
+	   				<i class="icon-th"></i></a> 
+	   				<?php kadence_next_post_link_plus( array('order_by' => 'menu_order', 'loop' => true, 'format' => '%link', 'link' => '<i class="icon-chevron-right"></i>') ); ?>
+	   				<span>&nbsp;</span>
+   				</div>
 			<h1 class="entry-title"><?php the_title(); ?></h1>
-		</div>
+			</div>
 		</div><!--container-->
 </div><!--titleclass-->
+<?php do_action( 'kadence_single_portfolio_before' ); ?>
 <div id="content" class="container">
     <div class="row">
       <div class="main <?php echo esc_attr( kadence_main_class() ); ?> portfolio-single" role="main">
       <?php while (have_posts()) : the_post(); ?>
-      <?php global $post; 
+      <?php 
       	$layout 	= get_post_meta( $post->ID, '_kad_ppost_layout', true ); 
 		$ppost_type = get_post_meta( $post->ID, '_kad_ppost_type', true );
 		$imgheight 	= get_post_meta( $post->ID, '_kad_posthead_height', true );
@@ -66,9 +75,11 @@
       <div class="postclass">
       	<div class="row">
       		<div class="<?php echo esc_attr($imgclass); ?>">
-				<?php if ($ppost_type == 'flex') { ?>
+      		<?php do_action( 'kadence_single_portfolio_before_feature' );
+				
+				if ($ppost_type == 'flex') { ?>
 					<div class="flexslider loading kt-flexslider kad-light-gallery" style="max-width:<?php echo esc_attr($slidewidth);?>px;" data-flex-speed="7000" data-flex-anim-speed="400" data-flex-animation="fade" data-flex-auto="<?php echo esc_attr($slideauto);?>">
-                       <ul class="slides">
+                       	<ul class="slides">
 						<?php
                           	$image_gallery = get_post_meta( $post->ID, '_kad_image_gallery', true );
                           		if(!empty($image_gallery)) {
@@ -94,9 +105,9 @@
 											}
                     					}	
 								} ?>                                
-					</ul>
-              </div> <!--Flex Slides-->
-              <?php } else if ($ppost_type == 'carousel') { ?>
+						</ul>
+              		</div> <!--Flex Slides-->
+              	<?php } else if ($ppost_type == 'carousel') { ?>
 					 <div id="imageslider" class="loading carousel_outerrim">
 					    <div class="carousel_slider_outer fredcarousel fadein-carousel" style="overflow:hidden; max-width:<?php echo esc_attr($slidewidth);?>px; height: <?php echo esc_attr($slideheight);?>px; margin-left: auto; margin-right:auto;">
 					        <div class="carousel_slider kad-light-gallery initcarouselslider" data-carousel-container=".carousel_slider_outer" data-carousel-transition="600" data-carousel-height="<?php echo esc_attr($slideheight); ?>" data-carousel-auto="<?php echo esc_attr($slideauto);?>" data-carousel-speed="9000" data-carousel-id="carouselslider">
@@ -151,44 +162,69 @@
                                     	</a>
                                     </div>
                                 <?php endif; ?>
-				<?php } ?>
+				<?php } 
+				do_action( 'kadence_single_portfolio_after_feature' ); ?>
         </div><!--imgclass -->
   		<div class="<?php echo esc_attr($textclass); ?>">
 		    <div class="entry-content <?php echo esc_attr($entryclass); ?> <?php echo esc_attr($portfolio_margin); ?>">
-		      <?php the_content(); ?>
+		    <?php 
+		      	do_action( 'kadence_single_portfolio_before_content' );
+		      	the_content(); 
+		      	do_action( 'kadence_single_portfolio_after_content' ); ?>
 		  	</div>
-	    	<div class="<?php echo esc_attr($valueclass); ?>">
+		  	<?php  				
+		  	$project_v1t = get_post_meta( $post->ID, '_kad_project_val01_title', true );
+			$project_v1d = get_post_meta( $post->ID, '_kad_project_val01_description', true );
+			$project_v2t = get_post_meta( $post->ID, '_kad_project_val02_title', true );
+			$project_v2d = get_post_meta( $post->ID, '_kad_project_val02_description', true );
+			$project_v3t = get_post_meta( $post->ID, '_kad_project_val03_title', true );
+			$project_v3d = get_post_meta( $post->ID, '_kad_project_val03_description', true );
+			$project_v4t = get_post_meta( $post->ID, '_kad_project_val04_title', true );
+			$project_v4d = get_post_meta( $post->ID, '_kad_project_val04_description', true );
+			$project_v5t = get_post_meta( $post->ID, '_kad_project_val05_title', true );
+			$project_v5d = get_post_meta( $post->ID, '_kad_project_val05_description', true );
+		  	if(!empty($project_v1t) || !empty($project_v2t)|| !empty($project_v3t) || !empty($project_v4t) || !empty($project_v5t)) { ?>
+	    		<div class="<?php echo esc_attr($valueclass); ?>">
 	    			<div class="pcbelow">
+	    			<?php do_action( 'kadence_single_portfolio_value_before' );  ?> 
 				    	<ul class="portfolio-content disc">
-				    	<?php  				$project_v1t = get_post_meta( $post->ID, '_kad_project_val01_title', true );
-				    						$project_v1d = get_post_meta( $post->ID, '_kad_project_val01_description', true );
-				    						$project_v2t = get_post_meta( $post->ID, '_kad_project_val02_title', true );
-				    						$project_v2d = get_post_meta( $post->ID, '_kad_project_val02_description', true );
-				    						$project_v3t = get_post_meta( $post->ID, '_kad_project_val03_title', true );
-				    						$project_v3d = get_post_meta( $post->ID, '_kad_project_val03_description', true );
-				    						$project_v4t = get_post_meta( $post->ID, '_kad_project_val04_title', true );
-				    						$project_v4d = get_post_meta( $post->ID, '_kad_project_val04_description', true );
-				    						$project_v5t = get_post_meta( $post->ID, '_kad_project_val05_title', true );
-				    						$project_v5d = get_post_meta( $post->ID, '_kad_project_val05_description', true ); ?>
-				    <?php if ($project_v1t != '') echo '<li class="pdetails"><span>'.esc_html($project_v1t).'</span> '.esc_html($project_v1d).'</li>'; ?>
-				    <?php if ($project_v2t != '') echo '<li class="pdetails"><span>'.esc_html($project_v2t).'</span> '.esc_html($project_v2d).'</li>'; ?>
-				    <?php if ($project_v3t != '') echo '<li class="pdetails"><span>'.esc_html($project_v3t).'</span> '.esc_html($project_v3d).'</li>'; ?>
-				    <?php if ($project_v4t != '') echo '<li class="pdetails"><span>'.esc_html($project_v4t).'</span> '.esc_html($project_v4d).'</li>'; ?>
-				    <?php if ($project_v5t != '') echo '<li class="pdetails"><span>'.esc_html($project_v5t).'</span> <a href="'.esc_url($project_v5d).'" target="_new">'.esc_html($project_v5d).'</a></li>'; ?>
-				    </ul><!--Portfolio-content-->
+				    	<?php 
+					    	if ($project_v1t != '') echo '<li class="pdetails"><span>'.esc_html($project_v1t).'</span> '.esc_html($project_v1d).'</li>'; 
+					    	if ($project_v2t != '') echo '<li class="pdetails"><span>'.esc_html($project_v2t).'</span> '.esc_html($project_v2d).'</li>'; 
+					    	if ($project_v3t != '') echo '<li class="pdetails"><span>'.esc_html($project_v3t).'</span> '.esc_html($project_v3d).'</li>'; 
+					    	if ($project_v4t != '') echo '<li class="pdetails"><span>'.esc_html($project_v4t).'</span> '.esc_html($project_v4d).'</li>'; 
+					    	if ($project_v5t != '') echo '<li class="pdetails"><span>'.esc_html($project_v5t).'</span> <a href="'.esc_url($project_v5d).'" target="_new">'.esc_html($project_v5d).'</a></li>'; 
+				    	?>
+				    	<?php do_action( 'kadence_single_portfolio_list_li' );  ?> 
+				    	</ul><!--Portfolio-content-->
+				    	<?php do_action( 'kadence_single_portfolio_value_after' );  ?> 
+					</div>
 				</div>
-				</div>
+			<?php } ?>
     	</div><!--textclass -->
     </div><!--row-->
     <div class="clearfix"></div>
     </div><!--postclass-->
     <footer>
-      <?php wp_link_pages(array('before' => '<nav id="page-nav" class="wp-pagenavi"><p>' . __('Pages:', 'virtue'), 'after' => '</p></nav>')); ?>
-      <?php global $post; $portfolio_carousel_recent = get_post_meta( $post->ID, '_kad_portfolio_carousel_recent', true ); if ($portfolio_carousel_recent == 'similar') { get_template_part('templates/similarportfolio', 'carousel'); } else if ($portfolio_carousel_recent == 'recent') { get_template_part('templates/recentportfolio', 'carousel');} ?>
+     <?php
+      /**
+      * @hooked virtue_portfolio_nav - 10
+      */
+      do_action( 'kadence_single_portfolio_footer' ); 
+      ?>
     </footer>
-    <?php global $virute; if(isset($virtue['portfolio_comments']) && $virtue['portfolio_comments'] == 1) { 
-    comments_template('/templates/comments.php'); 
-	} ?>
   </article>
-<?php endwhile; ?>
+<?php
+      /**
+      * @hooked virtue_portfolio_bottom_carousel - 30
+      * @hooked virtue_portfolio_comments - 40
+      */
+      do_action( 'kadence_single_portfolio_after' );
+
+      endwhile; ?>
 </div>
+<?php
+      /**
+      */
+      do_action( 'kadence_single_portfolio_end' );
+?>

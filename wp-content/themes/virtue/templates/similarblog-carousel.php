@@ -44,21 +44,27 @@
 				 	if ( $wp_query ) :  
 					while ( $wp_query->have_posts() ) : $wp_query->the_post(); ?>
                 	<div class="<?php echo esc_attr($itemsize);?>">
-                		<div <?php post_class('blog_item grid_item'); ?> itemscope="" itemtype="http://schema.org/BlogPosting">
-						<?php if (has_post_thumbnail( $post->ID ) ) {
-								$image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full' ); 
-								$thumbnailURL = $image_url[0]; 
-								$image = aq_resize($thumbnailURL, $catimgwidth, $catimgheight, true);
-								if(empty($image)) {$image = $thumbnailURL;} 
-
-							} else { 
-								$image = virtue_post_default_placeholder();
-							} ?>
-								<div class="imghoverclass">
-		                           		<a href="<?php the_permalink()  ?>" title="<?php the_title(); ?>">
-		                           			<img src="<?php echo esc_url($image); ?>" alt="<?php the_title(); ?>" class="iconhover" style="display:block;">
-		                           		</a> 
-		                        </div>
+                		<div <?php post_class('blog_item grid_item'); ?> itemscope itemtype="http://schema.org/BlogPosting">
+	                    		<?php if (has_post_thumbnail( $post->ID ) ) {
+	                    				$image_id = get_post_thumbnail_id( $post->ID );
+										$image_src = wp_get_attachment_image_src( $image_id, 'full' ); 
+										$image = aq_resize($image_src[0], $catimgwidth, $catimgheight, true, false, false, $image_id);
+										if(empty($image[0])) {$image = $image_src;} 
+										$img_srcset = kt_get_srcset_output($image[1], $image[2], $image_src[0], $image_id);
+								} else { 
+									$image_src = virtue_post_default_placeholder();
+									$image = aq_resize($image_src, $catimgwidth, $catimgheight, true, false, false);
+									if(empty($image[0])) {$image = array($image_src, null, null);} 
+									$img_srcset = null;
+								}?>
+								<div class="imghoverclass" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+				                    <a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
+				                        <img src="<?php echo esc_url($image[0]); ?>" alt="<?php the_title_attribute(); ?>" width="<?php echo esc_attr($image[1]);?>" height="<?php echo esc_attr($image[2]);?>" class="iconhover" <?php echo $img_srcset;?>>
+				                        <meta itemprop="url" content="<?php echo esc_url($image[0]); ?>">
+		                                <meta itemprop="width" content="<?php echo esc_attr($image[1])?>">
+		                                <meta itemprop="height" content="<?php echo esc_attr($image[2])?>">
+				                    </a> 
+				                </div>
                            		<?php $image = null; $thumbnailURL = null; ?>
 			              		<a href="<?php the_permalink() ?>" class="bcarousellink">
 							        <header>
@@ -71,6 +77,7 @@
 		                        		<p><?php echo strip_tags(virtue_excerpt(16)); ?></p>
 		                    		</div>
                            		</a>
+                           		<?php do_action('kadence_post_carousel_small_excerpt_footer'); ?>
 	                 	</div>
 	            	</div>
             		<?php endwhile; else: ?>

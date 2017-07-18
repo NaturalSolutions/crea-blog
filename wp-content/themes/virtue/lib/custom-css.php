@@ -339,7 +339,7 @@ if(isset($virtue['logo_layout']) and ($virtue['logo_layout'] == 'logocenter')) {
   $quantity_input = '';
 }
   if(isset($virtue['hide_image_border']) and ($virtue['hide_image_border'] == 1)) {
-  $wp_image_border = '[class*="wp-image"] {-webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;border:none;}[class*="wp-image"]:hover {-webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;border:none;}';
+  $wp_image_border = '[class*="wp-image"] {-webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;border:none;}[class*="wp-image"]:hover {-webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;border:none;}.light-dropshaddow {-webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;}';
   } else {
   $wp_image_border = '';
   }

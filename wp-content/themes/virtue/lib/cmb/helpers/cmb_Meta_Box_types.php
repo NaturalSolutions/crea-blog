@@ -175,7 +175,7 @@ class cmb_Meta_Box_types {
 	 * @return string        HTML table cell markup
 	 */
 	private static function repeat_cell( $input ) {
-		return '<td>'. $input .'</td><td class="remove-row"><a class="button remove-row-button" href="#">'. __( 'Remove', 'cmb' ) .'</a></td>';
+		return '<td>'. $input .'</td><td class="remove-row"><a class="button remove-row-button" href="#">'. __( 'Remove', 'virtue' ) .'</a></td>';
 	}
 
 	/**
@@ -520,7 +520,7 @@ class cmb_Meta_Box_types {
 	public static function file_list( $field, $meta, $object_id ) {
 
 		echo '<input class="cmb_upload_file cmb_upload_list" type="hidden" size="45" id="', $field['id'], '" name="', $field['id'], '" value="" />';
-		echo '<input class="cmb_upload_button button cmb_upload_list" type="button" value="'. __( 'Add or Upload File', 'cmb' ) .'" />', self::desc( true );
+		echo '<input class="cmb_upload_button button cmb_upload_list" type="button" value="'. __( 'Add or Upload File', 'virtue' ) .'" />', self::desc( true );
 
 		echo '<ul id="', $field['id'], '_status" class="cmb_media_status attach_list">';
 
@@ -533,7 +533,7 @@ class cmb_Meta_Box_types {
 					echo
 					'<li class="img_status">',
 						wp_get_attachment_image( $id, $preview_size ),
-						'<p><a href="#" class="cmb_remove_file_button">'. __( 'Remove Image', 'cmb' ) .'</a></p>
+						'<p><a href="#" class="cmb_remove_file_button">'. __( 'Remove Image', 'virtue' ) .'</a></p>
 						<input type="hidden" id="filelist-', $id ,'" name="', $field['id'] ,'[', $id ,']" value="', $fullurl ,'" />
 					</li>';
 
@@ -544,7 +544,7 @@ class cmb_Meta_Box_types {
 					}
 					echo
 					'<li>',
-						__( 'File:', 'cmb' ), ' <strong>', $title, '</strong>&nbsp;&nbsp;&nbsp; (<a href="', $fullurl, '" target="_blank" rel="external">'. __( 'Download', 'cmb' ) .'</a> / <a href="#" class="cmb_remove_file_button">'. __( 'Remove', 'cmb' ) .'</a>)
+						__( 'File:', 'virtue' ), ' <strong>', $title, '</strong>&nbsp;&nbsp;&nbsp; (<a href="', $fullurl, '" target="_blank" rel="external">'. __( 'Download', 'virtue' ) .'</a> / <a href="#" class="cmb_remove_file_button">'. __( 'Remove', 'virtue' ) .'</a>)
 						<input type="hidden" id="filelist-', $id ,'" name="', $field['id'] ,'[', $id ,']" value="', $fullurl ,'" />
 					</li>';
 				}
@@ -560,7 +560,7 @@ class cmb_Meta_Box_types {
 		if ( 'url' == $field['allow'] || ( is_array( $field['allow'] ) && in_array( 'url', $field['allow'] ) ) )
 			$input_type_url = 'text';
 		echo '<input class="cmb_upload_file" type="' . $input_type_url . '" size="45" id="', $field['id'], '" name="', $field['id'], '" value="', $meta, '" />';
-		echo '<input class="cmb_upload_button button" type="button" value="'. __( 'Add or Upload File', 'cmb' ) .'" />';
+		echo '<input class="cmb_upload_button button" type="button" value="'. __( 'Add or Upload File', 'virtue' ) .'" />';
 
 		$_id_name = $field['id'] .'_id';
 
@@ -579,7 +579,7 @@ class cmb_Meta_Box_types {
 				if ( self::is_valid_img_ext( $meta ) ) {
 					echo '<div class="img_status">';
 					echo '<img style="max-width: 350px; width: 100%; height: auto;" src="', $meta, '" alt="" />';
-					echo '<p><a href="#" class="cmb_remove_file_button" rel="', $field['id'], '">'. __( 'Remove Image', 'cmb' ) .'</a></p>';
+					echo '<p><a href="#" class="cmb_remove_file_button" rel="', $field['id'], '">'. __( 'Remove Image', 'virtue' ) .'</a></p>';
 					echo '</div>';
 				} else {
 					// $file_ext = self::get_file_ext( $meta );
@@ -587,7 +587,7 @@ class cmb_Meta_Box_types {
 					for ( $i = 0; $i < count( $parts ); ++$i ) {
 						$title = $parts[$i];
 					}
-					echo __( 'File:', 'cmb' ), ' <strong>', $title, '</strong>&nbsp;&nbsp;&nbsp; (<a href="', $meta, '" target="_blank" rel="external">'. __( 'Download', 'cmb' ) .'</a> / <a href="#" class="cmb_remove_file_button" rel="', $field['id'], '">'. __( 'Remove', 'cmb' ) .'</a>)';
+					echo __( 'File:', 'virtue' ), ' <strong>', $title, '</strong>&nbsp;&nbsp;&nbsp; (<a href="', $meta, '" target="_blank" rel="external">'. __( 'Download', 'virtue' ) .'</a> / <a href="#" class="cmb_remove_file_button" rel="', $field['id'], '">'. __( 'Remove', 'virtue' ) .'</a>)';
 				}
 			}
 		echo '</div>';

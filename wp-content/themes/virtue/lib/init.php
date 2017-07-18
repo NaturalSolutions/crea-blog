@@ -22,14 +22,14 @@ function kadence_setup() {
 }
 add_action('after_setup_theme', 'kadence_setup');
 
-// Backwards compatibility for older than PHP 5.3.0
-if (!defined('__DIR__')) { define('__DIR__', dirname(__FILE__)); }
-
 function virtue_fav_output(){
-  // Keep for fallback
-  global $virtue;
-  if(isset($virtue['virtue_custom_favicon']['url']) && !empty($virtue['virtue_custom_favicon']['url']) ) {
-    echo '<link rel="shortcut icon" type="image/x-icon" href="'. esc_url($virtue['virtue_custom_favicon']['url']).'" />';
-  }
+  // Keep for fallback, only show if there is no site icon.
+	$site_icon_id = get_option( 'site_icon' );
+	if(empty($site_icon_id)) {
+	  	global $virtue;
+	  	if(isset($virtue['virtue_custom_favicon']['url']) && !empty($virtue['virtue_custom_favicon']['url']) ) {
+	    	echo '<link rel="shortcut icon" type="image/x-icon" href="'. esc_url($virtue['virtue_custom_favicon']['url']).'" />';
+	  	}
+	}
 }
 add_action('wp_head', 'virtue_fav_output', 5);

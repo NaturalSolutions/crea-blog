@@ -16,19 +16,10 @@
         
         </div>
         
-       
-       
-     
-       
-        
-     
         <!--LOGO END-->
         
         <!--MENU STARTS-->
-       
-         
-       
-      
+        <h3 class="menu-toggle"><?php _e( 'Menu', 'hathor' ); ?></h3>
         <div id="menu_wrap"><div id="navmenu"><?php wp_nav_menu( array( 'container_class' => 'menu-header', 'theme_location' => 'primary' ) ); ?>   </div>
         
         </div>

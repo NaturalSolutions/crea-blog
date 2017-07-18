@@ -1,4 +1,4 @@
-<footer id="containerfooter" class="footerclass" role="contentinfo">
+<footer id="containerfooter" class="footerclass" itemscope itemtype="http://schema.org/WPFooter">
   <div class="container">
   	<div class="row">
   		<?php global $virtue; if(isset($virtue['footer_layout'])) { $footer_layout = $virtue['footer_layout']; } else { $footer_layout = 'fourc'; }
@@ -63,12 +63,13 @@
         		$footertext = str_replace('[copyright]','&copy;',$footertext);
         		$footertext = str_replace('[the-year]',date('Y'),$footertext);
         		$footertext = str_replace('[site-name]',get_bloginfo('name'),$footertext);
-        		$footertext = str_replace('[theme-credit]','- WordPress Theme by <a href="http://www.kadencethemes.com/" target="_blank">Kadence Themes</a>',$footertext);
+        		$footertext = str_replace('[theme-credit]','- WordPress Theme by <a href="https://www.kadencethemes.com/" target="_blank">Kadence Themes</a>',$footertext);
         		 echo do_shortcode($footertext); ?></p>
     	</div>
 
   </div>
 
 </footer>
+</div><!--Wrapper-->
 
 <?php wp_footer(); ?>

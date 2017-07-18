@@ -12,15 +12,35 @@ function woocommerce_support() {
 /*-----------------------------------------------------------------------------------*/
 
 if (class_exists('woocommerce')) {
+	if ( version_compare( WC_VERSION, '3.0', '>' ) ) {
+		$virtue = virtue_get_options();
+		if(isset($virtue['product_gallery_zoom']) && 1 == $virtue['product_gallery_zoom']) {
+			add_theme_support( 'wc-product-gallery-zoom' );
+		}
+		if(isset($virtue['product_gallery_slider']) && 1 == $virtue['product_gallery_slider']) {
+			add_theme_support( 'wc-product-gallery-slider' );
+		}
+	}
+  	add_filter( 'woocommerce_enqueue_styles', '__return_false' );
+  
+    // Disable WooCommerce Lightbox
+    if (get_option( 'woocommerce_enable_lightbox' ) == true ) {
+        update_option( 'woocommerce_enable_lightbox', false );
+    }
 
-  // Disable WooCommerce styles
-  if ( version_compare( WOOCOMMERCE_VERSION, "2.1" ) >= 0 ) {
-  add_filter( 'woocommerce_enqueue_styles', '__return_false' );
-  } else {
-    define( 'WOOCOMMERCE_USE_CSS', false );
-  }
-  // Disable WooCommerce Lightbox
-  update_option( 'woocommerce_enable_lightbox', false );
+  // Makes the product finder plugin work.
+  remove_action( 'template_redirect' , array( 'WooCommerce_Product_finder' , 'load_template' ) );
+
+   if(class_exists('WC_PDF_Product_Vouchers')) {
+      add_filter('template_include', 'kt_wc_voucher_override', 20);
+        function kt_wc_voucher_override($template) {
+            $cpt = get_post_type();
+            if ($cpt == 'wc_voucher') {
+              remove_filter('template_include', array('Kadence_Wrapping', 'wrap'), 101);
+            }
+            return $template;
+        }
+    }
     
 }
 remove_action( 'woocommerce_before_shop_loop', 'woocommerce_result_count', 20);
@@ -63,7 +83,7 @@ function kadence_woo_related_products_limit() {
     'ignore_sticky_posts'   => 1,
     //'orderby'               => $orderby,
     'post__in'              => $related,
-    'post__not_in'          => array($product->id)
+    'post__not_in'          => array($product->get_id())
   );
   return $args;
 }
@@ -100,26 +120,34 @@ if ( ! function_exists( 'kadence_wooframework_related_products' ) ) {
     }
   }
 }
-
-add_filter('add_to_cart_fragments', 'kadence_woocommerce_header_add_to_cart_fragment');
-function kadence_woocommerce_header_add_to_cart_fragment( $fragments ) {
-    global $woocommerce;
-    ob_start(); ?>
-    <a class="cart-contents" href="<?php echo esc_url($woocommerce->cart->get_cart_url()); ?>" title="<?php esc_attr_e('View your shopping cart', 'virtue'); ?>">
-        <i class="icon-shopping-cart" style="padding-right:5px;"></i>
-        <?php _e('Your Cart', 'virtue');?>
-        <span class="kad-cart-dash">-</span>
-        <?php if ( WC()->cart->tax_display_cart == 'incl' ) {
-              echo WC()->cart->get_cart_subtotal(); 
-            } else {
-              echo WC()->cart->get_cart_total();
-            }
-        ?>
-    </a>
-    <?php
-    $fragments['a.cart-contents'] = ob_get_clean();
-    return $fragments;
+function virtue_woocommerce_cart_fragments_support() {
+	if (class_exists('woocommerce')) {
+		if ( version_compare( WC_VERSION, '3.0', '>' ) ) {
+	    	add_filter('woocommerce_add_to_cart_fragments', 'virtue_woocommerce_header_add_to_cart_fragment');
+	    } else {
+	    	add_filter('add_to_cart_fragments', 'virtue_woocommerce_header_add_to_cart_fragment');
+	    }
+		function virtue_woocommerce_header_add_to_cart_fragment( $fragments ) {
+		    global $woocommerce;
+		    ob_start(); ?>
+		    <a class="cart-contents" href="<?php echo esc_url($woocommerce->cart->get_cart_url()); ?>" title="<?php esc_attr_e('View your shopping cart', 'virtue'); ?>">
+		        <i class="icon-shopping-cart" style="padding-right:5px;"></i>
+		        <?php _e('Your Cart', 'virtue');?>
+		        <span class="kad-cart-dash">-</span>
+		        <?php if ( WC()->cart->tax_display_cart == 'incl' ) {
+		              echo WC()->cart->get_cart_subtotal(); 
+		            } else {
+		              echo WC()->cart->get_cart_total();
+		            }
+		        ?>
+		    </a>
+		    <?php
+		    $fragments['a.cart-contents'] = ob_get_clean();
+		    return $fragments;
+		}
+	}
 }
+add_action( 'after_setup_theme', 'virtue_woocommerce_cart_fragments_support' );
 
 
 remove_action( 'woocommerce_shop_loop_item_title', 'woocommerce_template_loop_product_title', 10 );
@@ -145,8 +173,8 @@ if ( ! function_exists( 'kt_woocommerce_single_variation_add_to_cart_button' ) )
     <div class="variations_button">
       <?php woocommerce_quantity_input( array( 'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( $_POST['quantity'] ) : 1 ) ); ?>
       <button type="submit" class="kad_add_to_cart headerfont kad-btn kad-btn-primary single_add_to_cart_button"><?php echo esc_html( $product->single_add_to_cart_text() ); ?></button>
-      <input type="hidden" name="add-to-cart" value="<?php echo absint( $product->id ); ?>" />
-      <input type="hidden" name="product_id" value="<?php echo absint( $product->id ); ?>" />
+      <input type="hidden" name="add-to-cart" value="<?php echo absint( $product->get_id() ); ?>" />
+      <input type="hidden" name="product_id" value="<?php echo absint( $product->get_id() ); ?>" />
       <input type="hidden" name="variation_id" class="variation_id" value="" />
     </div>
     <?php
@@ -196,34 +224,32 @@ if ($woocommerce_loop['columns'] == '3'){
           $image_product = aq_resize($product_image_url, $productimgwidth, $productimgwidth, true);
           if(empty($image_product)) {$image_product = $product_image_url;} 
           // Get srcset
-          $image_meta = get_post_meta( $image_id, '_wp_attachment_metadata', true );
-          $img_srcset = wp_calculate_image_srcset(array( $productimgwidth, $productimgheight), $product_image_url, $image_meta, $image_id);
+          $img_srcset_output = kt_get_srcset_output( $productimgwidth, $productimgheight, $product_image_url, $image_id);
            // Get alt and fall back to title if no alt
           $alt_text = get_post_meta($image_id, '_wp_attachment_image_alt', true);
           if(empty($alt_text)) {$alt_text = get_the_title();}
-          ?> 
+            
+            ob_start();  ?> 
                 <img width="<?php echo esc_attr($productimgwidth);?>" height="<?php echo esc_attr($productimgheight);?>" 
                 src="<?php echo esc_url($image_product);?>"
-                <?php if(!empty($img_srcset)) { ?>
-                srcset="<?php echo esc_attr( $img_srcset ); ?>"
-                sizes="(max-width: <?php echo esc_attr($productimgwidth);?>px) 100vw, <?php echo esc_attr($productimgwidth);?>px" 
-                <?php } ?>
+                <?php echo $img_srcset_output;?>
                 class="attachment-shop_catalog size-<?php echo esc_attr($productimgwidth.'x'.$productimgheight);?> wp-post-image" 
                 alt="<?php echo esc_attr($alt_text); ?>">
-        <?php } elseif ( woocommerce_placeholder_img_src() ) {
+            <?php 
+            echo apply_filters('post_thumbnail_html', ob_get_clean(), $post->ID, $image_id, array($productimgwidth, $productimgheight), $attr = '');
+
+            } elseif ( woocommerce_placeholder_img_src() ) {
                  echo woocommerce_placeholder_img( 'shop_catalog' );
-        }  
-      } else { 
+            }  
+    } else { 
         echo '<div class="kad-woo-image-size">';
-        echo woocommerce_template_loop_product_thumbnail();
+            echo woocommerce_template_loop_product_thumbnail();
         echo '</div>';
-         }
-  }
+    }
+}
 
-  remove_action( 'woocommerce_before_shop_loop_item', 'woocommerce_template_loop_product_link_open', 10 );
+remove_action( 'woocommerce_before_shop_loop_item', 'woocommerce_template_loop_product_link_open', 10 );
 remove_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_product_link_close', 5 );
-
-remove_action( 'woocommerce_before_subcategory_title', 'woocommerce_subcategory_thumbnail', 10 );
 
 remove_action( 'woocommerce_shop_loop_subcategory_title', 'woocommerce_template_loop_category_title', 10 );
 add_action( 'woocommerce_shop_loop_subcategory_title', 'kt_woocommerce_template_loop_category_title', 10 );
@@ -261,3 +287,70 @@ function kt_woocommerce_template_loop_category_link_open( $category ) {
 function kt_woocommerce_template_loop_category_link_close() {
     echo '</a>';
 }
+
+/*
+*
+* WOO ARCHIVE CAT IMAGES
+*
+*/
+function kad_woo_archive_cat_image_output() {
+    remove_action( 'woocommerce_before_subcategory_title', 'woocommerce_subcategory_thumbnail', 10 );
+    add_action( 'woocommerce_before_subcategory_title', 'kad_woocommerce_subcategory_thumbnail', 10 );
+    function kad_woocommerce_subcategory_thumbnail($category) {
+        global $woocommerce_loop, $virtue;
+        
+        if ( empty( $woocommerce_loop['columns'] ) ) {
+            $woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 4 );
+        }
+        $product_cat_column = $woocommerce_loop['columns'];
+
+        if ($product_cat_column == '3'){
+            $catimgwidth = 380;
+        } else {
+            $catimgwidth = 270;
+        }
+       if(isset($virtue['product_cat_img_ratio'])) {
+          $img_ratio = $virtue['product_cat_img_ratio'];
+        } else {
+          $img_ratio = 'widelandscape';
+        }
+
+        if($img_ratio == 'portrait') {
+                $tempcatimgheight = $catimgwidth * 1.35;
+                $catimgheight = floor($tempcatimgheight);
+        } else if($img_ratio == 'landscape') {
+                $tempcatimgheight = $catimgwidth / 1.35;
+                $catimgheight = floor($tempcatimgheight);
+        } else if($img_ratio == 'square') {
+                $catimgheight = $catimgwidth;
+        } else {
+                $tempcatimgheight = $catimgwidth / 2;
+                $catimgheight = floor($tempcatimgheight);
+        }
+        // OUTPUT 
+
+        if($img_ratio == 'off') {
+                woocommerce_subcategory_thumbnail($category);
+        } else {
+            $thumbnail_id = get_woocommerce_term_meta( $category->term_id, 'thumbnail_id', true  );
+            if ( $thumbnail_id ) {
+                $image_cat_src = wp_get_attachment_image_src( $thumbnail_id, 'full');
+                $image_cat_url = $image_cat_src[0];
+                $cat_image = aq_resize($image_cat_url, $catimgwidth, $catimgheight, true, false, false, $thumbnail_id);
+                if(empty($cat_image[0])) {$cat_image = array($image_cat_url,$image_cat_src[1],$image_cat_src[2]);} 
+                $img_srcset_output = kt_get_srcset_output( $catimgwidth, $catimgheight, $image_cat_url, $thumbnail_id);
+
+            } else {
+                $cat_image = array(virtue_img_placeholder(),$catimgwidth,$catimgheight); 
+                $img_srcset_output = '';
+            }
+            if ( $cat_image[0] ) {
+                    echo '<div class="kt-cat-intrinsic" style="padding-bottom:'. ($cat_image[2]/$cat_image[1]) * 100 .'%;">';
+                    echo '<img src="' . esc_url($cat_image[0]) . '" width="'.esc_attr($cat_image[1]).'" height="'.esc_attr($cat_image[2]).'" alt="' . esc_attr($category->name) . '" '.$img_srcset_output.' />';
+                    echo '</div>';
+            }
+        }
+
+    }
+}
+add_action( 'init', 'kad_woo_archive_cat_image_output');

@@ -100,9 +100,8 @@
                     <key name="description" />
                 </key>
             </key>
+            <key name="portfolio_link" />
             <key name="footer_text" />
-            
-            
         </key>
     </admin-texts>    
 </wpml-config>

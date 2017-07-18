@@ -22,6 +22,7 @@ function hathor_other_css() {
 if ( !is_admin() ) {	
 wp_enqueue_style( 'hathor_other', get_template_directory_uri() . '/css/foundation.css' );
 wp_enqueue_style( 'hathor_other', get_template_directory_uri() . '/css/nivo-slider.css' );
+wp_enqueue_style( 'sidr_dark', get_template_directory_uri() . '/css/jquery.sidr.dark.css' );
 
 
 
@@ -131,6 +132,7 @@ if ( !is_admin() ) {
 wp_enqueue_script('jquery');
 wp_enqueue_script('hathor_js',get_template_directory_uri().'/other2.js');
 wp_enqueue_script('hathor_other',get_template_directory_uri().'/js/other.js');
+wp_enqueue_script('jquery_sidr',get_template_directory_uri().'/js/jquery.sidr.js');
 
 
 
@@ -200,28 +202,32 @@ function hathor_load_js() { ?>
 
 
 <?php } ?>
-
-
-
-<script type="text/javascript">
-	/* <![CDATA[ */
-		jQuery().ready(function() {
-
-	jQuery('#navmenu').prepend('<div id="menu-icon"><?php _e('Menu', 'hathor') ?></div>');
-	jQuery("#menu-icon").on("click", function(){
-		jQuery("#navmenu .menu").slideToggle();
-		jQuery(this).toggleClass("menu_active");
-	});
-
-		});
-	/* ]]> */
-	</script>
-    
+  
 <script type="text/javascript" charset="utf-8">
   
    
 	
+	jQuery(window).ready(function($) {
+ /* Side responsive menu	 */
+    $('.menu-toggle').sidr({
+        name: 'sidr-left',
+        side: 'left',
+        source: '#navmenu',
+        onOpen: function() {
+            $('.menu-toggle').animate({
+                marginLeft: "260px"
+            }, 200);
+        },
+        onClose: function() {
+            $('.menu-toggle').animate({
+                marginLeft: "0px"
+            }, 200);
+        }
+    });
 	
+
+});
+
 	
 	
     jQuery(document).ready(function($) {
@@ -416,8 +422,7 @@ add_theme_support('automatic-feed-links');
     add_theme_support('automatic-feed-links');
 
 
-// Make theme available for translation
- load_theme_textdomain('hathor', get_template_directory() . '/languages');  
+
 	
 	
         

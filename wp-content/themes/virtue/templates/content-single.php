@@ -23,93 +23,140 @@
         $slidewidth = $swidth; 
       } else {
         $slidewidth = $slide_sidebar;
-      } ?>
-  <div id="content" class="container">
-    <div class="row single-article" itemscope="" itemtype="http://schema.org/BlogPosting">
-      <div class="main <?php echo esc_attr( kadence_main_class() ); ?>" role="main">
-        <?php while (have_posts()) : the_post(); ?>
-          <article <?php post_class(); ?>>
-            <?php if ($headcontent == 'flex') { ?>
-              <section class="postfeat">
-                <div class="flexslider loading kt-flexslider" style="max-width:<?php echo esc_attr($slidewidth);?>px;" data-flex-speed="7000" data-flex-anim-speed="400" data-flex-animation="fade" data-flex-auto="true">
-                  <ul class="slides">
-                  <?php $image_gallery = get_post_meta( $post->ID, '_kad_image_gallery', true );
-                          if(!empty($image_gallery)) {
-                            $attachments = array_filter( explode( ',', $image_gallery ) );
-                              if ($attachments) {
-                              foreach ($attachments as $attachment) {
-                                $attachment_url = wp_get_attachment_url($attachment , 'full');
-                                $image = aq_resize($attachment_url, $slidewidth, $slideheight, true);
-                                  if(empty($image)) {$image = $attachment_url;}
-                                echo '<li><img src="'.esc_url($image).'" itemprop="image"/></li>';
-                              }
-                            }
-                          } else {
-                            $attach_args = array('order'=> 'ASC','post_type'=> 'attachment','post_parent'=> $post->ID,'post_mime_type' => 'image','post_status'=> null,'orderby'=> 'menu_order','numberposts'=> -1);
-                            $attachments = get_posts($attach_args);
-                              if ($attachments) {
-                                foreach ($attachments as $attachment) {
-                                  $attachment_url = wp_get_attachment_url($attachment->ID , 'full');
-                                  $image = aq_resize($attachment_url, $slidewidth, $slideheight, true);
-                                    if(empty($image)) {$image = $attachment_url;}
-                                  echo '<li><img src="'.esc_url($image).'" itemprop="image"/></li>';
-                                }
-                              } 
-                          } ?>                            
-                  </ul>
-                </div> <!--Flex Slides-->
-              </section>
-        <?php } else if ($headcontent == 'video') { ?>
-          <section class="postfeat">
-            <div class="videofit">
-                <?php echo get_post_meta( $post->ID, '_kad_post_video', true ); ?>
-            </div>
-          </section>
-        <?php } else if ($headcontent == 'image') {          
-                    $thumb = get_post_thumbnail_id();
-                    $img_url = wp_get_attachment_url( $thumb,'full' );
-                    $image = aq_resize( $img_url, $slidewidth, $slideheight, true ); //resize & crop the image
-                    if(empty($image)) { $image = $img_url; }
-                    if($image) : ?>
-                      <div class="imghoverclass postfeat post-single-img" itemprop="image">
-                        <a href="<?php echo esc_url($img_url); ?>" data-rel="lightbox" class="lightboxhover">
-                          <img src="<?php echo esc_url($image); ?>" itemprop="image" alt="<?php the_title(); ?>" />
-                        </a>
-                      </div>
-                    <?php endif; ?>
-        <?php } ?>
-    <?php get_template_part('templates/post', 'date'); ?> 
-    <header>
-      <h1 class="entry-title" itemprop="name headline"><?php the_title(); ?></h1>
-      <?php get_template_part('templates/entry', 'meta-subhead'); ?>  
-    </header>
-    <div class="entry-content" itemprop="description articleBody">
-      <?php the_content(); ?>
-    </div>
-    <footer class="single-footer">
-      <?php $tags = get_the_tags(); if ($tags) { ?>
-        <span class="posttags"><i class="icon-tag"></i> <?php the_tags('', ', ', ''); ?> </span>
-      <?php } ?>
-      <?php $authorbox = get_post_meta( $post->ID, '_kad_blog_author', true );
-      if(empty($authorbox) || $authorbox == 'default') {
-          if(isset($virtue['post_author_default']) && ($virtue['post_author_default'] == 'yes')) {
-            virtue_author_box(); 
-          }
-      } else if($authorbox == 'yes'){ 
-        virtue_author_box(); 
-      }?>
-      <?php $blog_carousel_recent = get_post_meta( $post->ID, '_kad_blog_carousel_similar', true ); 
-      if(empty($blog_carousel_recent) || $blog_carousel_recent == 'default' ) { if(isset($virtue['post_carousel_default'])) {$blog_carousel_recent = $virtue['post_carousel_default']; } }
-      if ($blog_carousel_recent == 'similar') { 
-        get_template_part('templates/similarblog', 'carousel');
-      } else if($blog_carousel_recent == 'recent') {
-        get_template_part('templates/recentblog', 'carousel');
-      } ?>
-      <?php wp_link_pages(array('before' => '<nav class="page-nav"><p>' . __('Pages:', 'virtue'), 'after' => '</p></nav>')); ?>
-      <?php if(isset($virtue['show_postlinks']) &&  $virtue['show_postlinks'] == 1) {get_template_part('templates/entry', 'post-links'); }?>
-    </footer>
-    <?php comments_template('/templates/comments.php'); ?>
-  </article>
-<?php endwhile; ?>
-</div>
+      } 
 
+    /**
+    * 
+    */
+    do_action( 'kadence_single_post_begin' ); 
+    ?>
+<div id="content" class="container">
+    <div class="row single-article" itemscope itemtype="http://schema.org/BlogPosting">
+        <div class="main <?php echo esc_attr( kadence_main_class() ); ?>" role="main">
+        <?php while (have_posts()) : the_post(); ?>
+            <article <?php post_class(); ?>>
+            <?php
+             do_action( 'kadence_single_post_before' ); 
+
+            if ($headcontent == 'flex') { ?>
+                <section class="postfeat">
+                    <div class="flexslider kad-light-wp-gallery loading kt-flexslider" style="max-width:<?php echo esc_attr($slidewidth);?>px;" data-flex-speed="7000" data-flex-anim-speed="400" data-flex-animation="fade" data-flex-auto="true">
+                        <ul class="slides">
+                        <?php 
+                        $image_gallery = get_post_meta( $post->ID, '_kad_image_gallery', true );
+                        if(!empty($image_gallery)) {
+                            $attachments = array_filter( explode( ',', $image_gallery ) );
+                            if ($attachments) {
+                                foreach ($attachments as $attachment) {
+                                $attachment_src = wp_get_attachment_image_src($attachment , 'full');
+                                $caption = get_post($attachment)->post_excerpt;
+                                $image = aq_resize($attachment_src[0], $slidewidth, $slideheight, true, false, false, $attachment);
+                                if(empty($image[0])) { $image = array($attachment_src[0], $attachment_src[1], $attachment_src[2]); }
+
+                                    echo '<li>';
+                                        echo '<a href="'.esc_url($attachment_src[0]).'" data-rel="lightbox" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">';
+                                            echo '<img src="'.esc_url($image[0]).'" width="'.esc_attr($image[1]).'" height="'.esc_attr($image[2]).'" alt="'.esc_attr($caption).'" '.kt_get_srcset_output($image[1], $image[2], $attachment_src[0], $attachment).' itemprop="contentUrl"/>';
+                                                echo '<meta itemprop="url" content="'.esc_url($image[0]).'">';
+                                                echo '<meta itemprop="width" content="'.esc_attr($image[1]).'">';
+                                                echo '<meta itemprop="height" content="'.esc_attr($image[2]).'">';
+                                        echo '</a>';
+                                    echo '</li>';
+                                }
+                            }
+                        }
+                        ?>                            
+                        </ul>
+                    </div> <!--Flex Slides-->
+                </section>
+            <?php } else if ($headcontent == 'video') { ?>
+                <section class="postfeat">
+                    <div class="videofit">
+                        <?php echo do_shortcode( get_post_meta( $post->ID, '_kad_post_video', true ) ); ?>
+                    </div>
+                    <?php if (has_post_thumbnail( $post->ID ) ) { 
+                        $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full' ); ?>
+                    <div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+                        <meta itemprop="url" content="<?php echo esc_url($image[0]); ?>">
+                        <meta itemprop="width" content="<?php echo esc_attr($image[1])?>">
+                        <meta itemprop="height" content="<?php echo esc_attr($image[2])?>">
+                    </div>
+                    <?php } ?>
+                </section>
+            <?php } else if ($headcontent == 'image') {
+                    if (has_post_thumbnail( $post->ID ) ) {        
+                        $image_id = get_post_thumbnail_id();
+                        $image_src = wp_get_attachment_image_src( $image_id, 'full' );
+                        $image = aq_resize( $image_src[0], $slidewidth, $slideheight, true, false, false, $image_id); //resize & crop the image
+                        if(empty($image[0])) { $image = array($image_src[0], $image_src[1], $image_src[2]); }
+                        ?>
+                            <div class="imghoverclass postfeat post-single-img" itemscope itemtype="https://schema.org/ImageObject">
+                                <a href="<?php echo esc_url($image_src[0]); ?>" data-rel="lightbox" class="lightboxhover">
+                                    <img src="<?php echo esc_url($image[0]); ?>"  width="<?php echo esc_attr($image[1]); ?>" height="<?php echo esc_attr($image[2]); ?>" <?php echo kt_get_srcset_output($image[1], $image[2], $image[0], $image_id);?> itemprop="contentUrl" alt="<?php the_title_attribute(); ?>" />
+                                    <meta itemprop="url" content="<?php echo esc_url($image[0]); ?>">
+                                    <meta itemprop="width" content="<?php echo esc_attr($image[1])?>">
+                                    <meta itemprop="height" content="<?php echo esc_attr($image[2])?>">
+                                </a>
+                            </div>
+                        <?php
+                    } 
+            } else {
+            	if(has_post_thumbnail()) {
+				    $image = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' ); 
+				    echo '<div class="meta_post_image" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">';
+				        echo '<meta itemprop="url" content="'.esc_url($image[0]).'">';
+				        echo '<meta itemprop="width" content="'.esc_attr($image[1]).'">';
+				        echo '<meta itemprop="height" content="'.esc_attr($image[2]).'">';
+				    echo '</div>';
+				}
+           	} ?>
+
+                <?php
+                  /**
+                  * @hooked virtue_single_post_meta_date - 20
+                  */
+                  do_action( 'kadence_single_post_before_header' );
+                  ?>
+                <header>
+                    <?php 
+                    /**
+                    * @hooked virtue_post_header_title - 20
+                    * @hooked virtue_post_header_meta - 30
+                    */
+                    do_action( 'kadence_single_post_header' );
+                    ?>
+                </header>
+
+                <div class="entry-content" itemprop="articleBody">
+                    <?php
+                    do_action( 'kadence_single_post_content_before' );
+                        
+                        the_content(); 
+                      
+                    do_action( 'kadence_single_post_content_after' );
+                    ?>
+                </div>
+
+                <footer class="single-footer">
+                <?php 
+                  /**
+                  * @hooked virtue_post_footer_pagination - 10
+                  * @hooked virtue_post_footer_tags - 20
+                  * @hooked virtue_post_footer_meta - 30
+                  * @hooked virtue_post_nav - 40
+                  */
+                  do_action( 'kadence_single_post_footer' );
+                  ?>
+                </footer>
+            </article>
+            <?php
+            /**
+            * @hooked virtue_post_authorbox - 20
+            * @hooked virtue_post_bottom_carousel - 30
+            * @hooked virtue_post_comments - 40
+            */
+            do_action( 'kadence_single_post_after' );
+            
+            endwhile; ?>
+        </div>
+        <?php 
+        do_action( 'kadence_single_post_end' ); 

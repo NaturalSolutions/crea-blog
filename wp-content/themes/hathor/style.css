@@ -6,13 +6,15 @@ Author: Imonthemes
 Author URI: http://www.imonthemes.com
 License: GNU General Public License, v3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
+Text Domain: hathor
+Domain Path: /languages/
 
 Description: Hathor Theme makes it easy to fully customize the Layout, Colors and Style within minutes.The theme allows you to  upload your logo.The Theme also has a  2 header style , 2 Service Block Style , 2 Latest Post layout , Full width and Box option ,translation ready. The theme is SEO Friendly and has plenty of user-friendly options. Due to its superb flexibility of its framework, it allows you to create unique Websites for many purposes like Magazine, Blog, Portfolio, Creative or Business. Fits all popular mobile devices and tablets.
 
-Version: 3.5
+Version: 3.9
 
 
-Tags: fixed-layout,fluid-layout,theme-options, one-column, dark, black, white, right-sidebar, custom-background, theme-options, translation-ready, featured-images, full-width-template,sticky-post, post-formats, dark,responsive-layout
+Tags: grid-layout,footer-widgets,blog,education,food-and-drink,holiday
 
 Hathor WordPress Theme, Copyright 2014 imonthemes.com
 Hathor is distributed under the terms of the GNU GPL
@@ -42,12 +44,16 @@ p {
 	padding: 0px;
 	
 }
+#wrapper {
+    overflow: hidden;
+    width: 100%;
+}
 .warp{ background-color:#FFF;}
 /*                                             Header
 ================================================================================ */
 
 
-
+.menu-toggle { display:none;}	
 
 /*-----------------------------------------------------------------------------------*/
 /*	STRUCTURE
@@ -300,7 +306,7 @@ body #navmenu {
 	padding: 10px 0px;
 	cursor: pointer;
 	font-size: 20px;
-	display: block!important; /* show menu icon */
+	display: none; /* show menu icon */
 }
 #menu-icon:hover {
 }
@@ -852,7 +858,7 @@ margin-bottom:0px;
 
 
 	
-.midrow_blocks{ width:23.5%; padding: 0px;  float:left;  position:relative;height: 300px; margin-left:6px; margin-right:6px;  }
+.midrow_blocks{ width:23.5%; padding: 0px;  float:left;  position:relative;height: 300px; margin-left:6px; margin-right:6px; text-align:center;  }
 
 .link { text-align:center;}
 .midbutton { display: inline-block;
@@ -3074,9 +3080,11 @@ margin-left: 18%;	}
 /*iphone 320*480 */
 @media only screen and (max-width:480px) {
 	
-	.style2.midrow_blocks { width:280px; margin-bottom:20px;  margin-left:10px; margin-right:20px;}
+	.style2.midrow_blocks { width:80%; margin-bottom:20px;     margin-right: 10%;
+    margin-left: 8%;}
 	
-	.midrow_blocks { width:280px; margin-bottom:20px;  margin-left:10px;}
+	.midrow_blocks {  width:80%; margin-bottom:20px;      margin-right: 10%;
+    margin-left: 8%;}
 	.social-profiles {
 float: left;
 margin-left: 10px;
@@ -3094,7 +3102,7 @@ margin-left:10%;
 padding:  0px;
 cursor: pointer;
 font-size: 20px;
-display: block!important;
+display: none;
 border: 1px solid #CCC;
 width: 60%;
 margin-left: 18%;
@@ -3135,14 +3143,14 @@ margin-left: 18%;	}
 	.nivo-caption h3 { padding:5px;}
 
 .lay1 .hentry {
-width: 220px;
-background: #fff;
-height: 350px;
-margin-right: 22px;
-float: left;
-margin-bottom: 40px;
-
-margin-left: 10px;
+width: 80%;
+    background: #fff;
+    height: 350px;
+    margin-right: 22px;
+    float: left;
+    margin-bottom: 40px;
+    margin-left: 10px;
+    padding: 0px;
 
 
 }
@@ -3206,14 +3214,14 @@ margin-left: -80px;
 		
 		
 		.lay1 .hentry {
-width: 260px;
-background: #fff;
-height: 350px;
-margin-right: 22px;
-float: left;
-margin-bottom: 40px;
-
-margin-left: 10px;
+width: 80%;
+    background: #fff;
+    height: 350px;
+    margin-right: 22px;
+    float: left;
+    margin-bottom: 40px;
+    margin-left: 10px;
+    padding: 0px;
 
 
 }
@@ -3225,3 +3233,43 @@ margin-left: 10px;
 		}
 		
 		
+@media (max-width: 992px) {
+	
+	.menu-toggle {
+		cursor: pointer;
+		display: block;
+		position: fixed;
+		left: 0px;
+		top: 5px;
+		padding: 8px 5px 8px 5px;
+		font-size: 16px;
+		font-weight: 400;
+		color: #FFF;
+		
+		-webkit-box-shadow: 0px 0px 2px 0px rgba(50, 50, 50, 0.64);
+		-moz-box-shadow:    0px 0px 2px 0px rgba(50, 50, 50, 0.64);
+		box-shadow:         0px 0px 2px 0px rgba(50, 50, 50, 0.64);
+		-webkit-border-top-right-radius: 3px;
+		-webkit-border-bottom-right-radius: 3px;
+		-moz-border-radius-topright: 3px;
+		-moz-border-radius-bottomright: 3px;
+		border-top-right-radius: 3px;
+		border-bottom-right-radius: 3px;		
+		background-color: rgba(40,40,40,0.3)
+				
+	}
+
+	.menu-toggle:after {
+		content: "\f0c9";
+		font-size: 18px;
+		padding-left: 8px;
+		font-weight: 700;
+		font-family: FontAwesome;
+	}
+	
+	#sidr-id-menu-icon{padding: 5%;
+    background: #36484C;}
+	
+	.row{overflow:hidden}
+	
+	}

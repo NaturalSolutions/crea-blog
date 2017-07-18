@@ -207,7 +207,7 @@ class Kadence_Contact_Widget extends WP_Widget {
     <div class="vcard">
       
       <?php if(!empty($instance['company'])):?><h5 class="vcard-company"><i class="icon-building"></i><?php echo $instance['company']; ?></h5><?php endif;?>
-      <?php if(!empty($instance['name'])):?><p class="vcard-name" class="fn" rel="author"><i class="icon-user"></i><?php echo $instance['name']; ?></p><?php endif;?>
+      <?php if(!empty($instance['name'])):?><p class="vcard-name fn"><i class="icon-user"></i><?php echo $instance['name']; ?></p><?php endif;?>
       <?php if(!empty($instance['street_address']) || !empty($instance['locality']) || !empty($instance['region']) ):?>
         <p class="vcard-address"><i class="icon-map-marker"></i><?php echo $instance['street_address']; ?>
        <span><?php echo $instance['locality']; ?> <?php echo $instance['region']; ?> <?php echo $instance['postal_code']; ?></span></p>
@@ -224,8 +224,8 @@ class Kadence_Contact_Widget extends WP_Widget {
   public function update($new_instance, $old_instance) {
     $instance = $old_instance;
     $instance['title'] = strip_tags($new_instance['title']);
-  $instance['company'] = strip_tags($new_instance['company']);
-  $instance['name'] = strip_tags($new_instance['name']);
+    $instance['company'] = strip_tags($new_instance['company']);
+    $instance['name'] = strip_tags($new_instance['name']);
     $instance['street_address'] = strip_tags($new_instance['street_address']);
     $instance['locality'] = strip_tags($new_instance['locality']);
     $instance['region'] = strip_tags($new_instance['region']);
@@ -339,7 +339,7 @@ class Kadence_Social_Widget extends WP_Widget {
 <?php if(!empty($instance['instagram'])):?><a href="<?php echo esc_url($instance['instagram']); ?>" class="instagram_link" title="Instagram" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="Instagram"><i class="icon-instagram"></i></a><?php endif;?>
 <?php if(!empty($instance['googleplus'])):?><a href="<?php echo esc_url($instance['googleplus']); ?>" class="googleplus_link" title="GooglePlus" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="GooglePlus"><i class="icon-google-plus"></i></a><?php endif;?>
 <?php if(!empty($instance['flickr'])):?><a href="<?php echo esc_url($instance['flickr']); ?>" class="flickr_link" title="Flickr" data-toggle="tooltip" target="_blank" data-placement="top" data-original-title="Flickr"><i class="icon-flickr"></i></a><?php endif;?>
-<?php if(!empty($instance['vimeo'])):?><a href="<?php echo esc_url($instance['vimeo']); ?>" class="vimeo_link" title="Vimeo" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="Vimeo"><i class="icon-play"></i></a><?php endif;?>
+<?php if(!empty($instance['vimeo'])):?><a href="<?php echo esc_url($instance['vimeo']); ?>" class="vimeo_link" title="Vimeo" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="Vimeo"><i class="icon-vimeo"></i></a><?php endif;?>
 <?php if(!empty($instance['youtube'])):?><a href="<?php echo esc_url($instance['youtube']); ?>" class="youtube_link" title="YouTube" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="YouTube"><i class="icon-youtube"></i></a><?php endif;?>
 <?php if(!empty($instance['pinterest'])):?><a href="<?php echo esc_url($instance['pinterest']); ?>" class="pinterest_link" title="Pinterest" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="Pinterest"><i class="icon-pinterest"></i></a><?php endif;?>
 <?php if(!empty($instance['dribbble'])):?><a href="<?php echo esc_url($instance['dribbble']); ?>" class="dribbble_link" title="Dribbble" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="Dribbble"><i class="icon-dribbble"></i></a><?php endif;?>
@@ -625,7 +625,7 @@ class Kadence_Image_Grid_Widget extends WP_Widget {
           $type_options[] = '<option value="">All</option>';
  
     foreach ($types as $type) {
-      if ($thetype==$type->slug) { $selected=' selected="selected"';} else { $selected=""; }
+      if ($thetype == $type->slug) { $selected=' selected="selected"';} else { $selected=""; }
       $type_options[] = '<option value="' . $type->slug .'"' . $selected . '>' . $type->name . '</option>';
     }
      $categories= get_categories();

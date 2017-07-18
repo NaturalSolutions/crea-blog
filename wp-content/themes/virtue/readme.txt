@@ -20,7 +20,7 @@ Yes, go here: http://docs.kadencethemes.com/virtue/
 
 = Is there demo content available? =
 
-Yes, go here: http://www.kadencethemes.com/kadence-themes-demo-content/
+Yes, go here: https://www.kadencethemes.com/kadence-themes-demo-content/
 
 = Is there a free support form for this theme? =
 
@@ -29,6 +29,148 @@ Yes, go here: https://wordpress.org/support/theme/virtue
 == Changelog ==
 
 = Theme Name: Virtue =
+
+= Version 3.0.3 | 27th June 2017 = 
+* Fix issue with skip to content.
+
+
+= Version 3.0.2 | 27th June 2017 = 
+* Update: ready for WC 3.1.0
+* Update: Header and footer templates for better plugin compatibility
+
+= Version 3.0.1 | 19th June 2017 = 
+* Update: Schema.
+* Update: Small css update.
+
+= Version 3.0.0 | 17th May 2017 = 
+* Update: Woo Template.
+* Update: Schema.
+
+= Version 2.9.9 | 9th April 2017 = 
+* Update: Woo Template
+
+= Version 2.9.8 | 20th April 2017 = 
+* Fix: Issue with wc notice
+* Fix: Missing icon in admin.
+
+= Version 2.9.7 | 18th April 2017 = 
+* Fix: Issue with cart reload and quantity.
+* Update: Icon font to include vimeo.
+
+= Version 2.9.6 | 17th April 2017 = 
+* Fix: Issue with WC notice.
+
+= Version 2.9.5 | 13th April 2017 = 
+* Fix: Issue with undifined varible.
+* Fix: Issue with shop back link.
+
+= Version 2.9.4 | 12th April 2017 = 
+* Fix: Issue with woocommerce zoom init.
+* Update: Checkout CSS.
+* Fix: Woo Notice.
+
+= Version 2.9.3 | 6th April 2017 =
+* Fix: Notice from WC of out of date templates.
+
+= Version 2.9.2 | 3rd April 2017 =
+* Fix: Small bug with thumbnails srcset and photon.
+* Update: Google font options.
+
+= Version 2.9.1 | 3rd April 2017 =
+* Update: Fix for Jetpack Photon.
+* Update: Fix for certain variation plugin.
+
+= Version 2.9.0 | 31th March 2017 =
+* Update: Ready for WC 3.0
+* Update: Move user profile options to plugin.
+* Update: Start intergrating Kadence Image processing.
+
+= Version 2.8.9 | 18th March 2017 =
+* Update: Grouped Product issue.
+* Update: Single Product issue.
+* Update: Lightbox Title issue.
+
+= Version 2.8.8 | 13th March 2017 =
+* Update: Grouped Product issue.
+* Update: Google Fonts
+
+= Version 2.8.7 | 10th March 2017 =
+* Update: Woocommerce 2.7 Support.
+
+= Version 2.8.6 | 7th March 2017 =
+* Update: css for checkout.
+* Update: Image resize functions.
+* Update: Woocommerce 2.7 Support.
+
+= Version 2.8.5 | 24th January 2017 =
+* Update: Fitvids.
+* Update: Css.
+
+= Version 2.8.4 | 24th October 2016 =
+* Update: new version number.
+
+= Version 2.8.3 | 12th October 2016 =
+* Fix: Issue with Undefined variable.
+
+= Version 2.8.2 | 11th October 2016 =
+* Update: Issue with icons select not showing.
+
+= Version 2.8.1 | 4th October 2016 =
+* Update: Schema, now google doesn't show "errors".
+
+= Version 2.8.0 | 13th September 2016 =
+* Fix: Issue with cc icon.
+
+= Version 2.7.9 | 12th September 2016 =
+* Fix: Issue with post_thumbnail_html.
+* Update: WPML Config.
+
+= Version 2.7.7 | 29th August 2016 =
+* Fix: Issue with portfolio carousel.
+* Update: hooks.
+* Update: CSS.
+
+= Version 2.7.6 | 21st July 2016 =
+* Fix: Empty category Image issue.
+
+= Version 2.7.5 | 19th July 2016 =
+* Update: Woo files.
+* Fix: Issue with category images.
+
+= Version 2.7.4 | 13th July 2016 =
+* Update: Contact form Map API input. 
+* Update: Google plus icon.
+* Update: Content Single template.
+* Update: woo templates.
+* Fix: woo issue with quantity in cart when updated.
+
+= Version 2.7.3 | 16th June 2016 =
+* Update: woo files
+
+= Version 2.7.2 | 9th June 2016 =
+* Update: Docs link for new docs.
+* Update: Theme options.
+* Update: WC 2.5.
+* Update: RTL beta support.
+
+= Version 2.7.1 | 13th May 2016 =
+* Fix: Embed layout issue.
+* Fix: Img srcset issue.
+* Update: imageloaded.
+
+= Version 2.7.0 | 4th May 2016 =
+* Fix: Archive title with polylang.
+* Update: Small woocommerce changes.
+
+= Version 2.6.9 | 27th April 2016 =
+* Fix: Portfolio single.
+
+= Version 2.6.8 | 27th April 2016 =
+* Update: Cat issue.
+* Update: Screenshot.
+* Update: Remove gallery boxshaddow if image border off.
+* Update: Srcset for product images.
+* Add: Filter for banner.
 
 = Version 2.6.7 | 22nd March 2016 =
 * Update: Cat issue.

@@ -40,7 +40,7 @@
 			$xyz = 0;
 			if ( $wp_query ) : while ( $wp_query->have_posts() ) : $wp_query->the_post(); ?>
 				<div class="<?php echo esc_attr($postwidthclass); ?> clearclass<?php echo esc_attr( ($xyz++%2) ); ?>">
-				  	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+				  	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> itemscope="" itemtype="http://schema.org/BlogPosting">
 	                    <div class="rowtight">
 	                    	<?php if(isset($virtue['post_summery_default']) && ($virtue['post_summery_default'] != 'text')) {
 	                    			if($home_sidebar == true) {
@@ -52,34 +52,32 @@
 	                    			}
 	                    			if (has_post_thumbnail( $post->ID ) ) {
 										$image_id = get_post_thumbnail_id( $post->ID );
-										$image_url = wp_get_attachment_image_src( $image_id, 'full' ); 
-										$thumbnailURL = $image_url[0];
-										$image = aq_resize($thumbnailURL, $img_width, 270, true);
-										if(empty($image)) { $image = $thumbnailURL; }
-										$image_meta = get_post_meta( $image_id, '_wp_attachment_metadata', true );
-          								$img_srcset = wp_calculate_image_srcset(array( $img_width, '270'), $image, $image_meta, $image_id);
+										$image_src = wp_get_attachment_image_src( $image_id, 'full' ); 
+										$image = aq_resize($image_src[0], $img_width, 270, true, false, false, $image_id);
+										if(empty($image)) { $image = array($image_src[0], $image_src[1], $image_src[2]); }
+          								$img_srcset = kt_get_srcset_output($img_width, '270', $image_src[0], $image_id);
 							 		} else {
-								 		$thumbnailURL = virtue_post_default_placeholder();
-										$image = aq_resize($thumbnailURL, $img_width, 270, true);
-										if(empty($image)) { $image = $thumbnailURL; }
+								 		$image_src = virtue_post_default_placeholder();
+										$image = aq_resize($image_src, $img_width, 270, true, false, false);
+										if(empty($image)) { $image = array($image_src, null, null); }
           								$img_srcset = '';
 							 		} ?>
 									<div class="<?php echo esc_attr($imagesize);?>">
-									 	<div class="imghoverclass">
-			                           		<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
-			                           			<img src="<?php echo esc_url($image); ?>"
-			                           			width="<?php echo esc_attr($img_width);?>" height="270" 
-			                           			<?php if(!empty($img_srcset)) { ?>
-			                           				srcset="<?php echo esc_attr( $img_srcset ); ?>"
-                									sizes="(max-width: <?php echo esc_attr($img_width);?>px) 100vw, <?php echo esc_attr($img_width);?>px"
-                								<?php } ?>
+									 	<div class="imghoverclass" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+			                           		<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
+			                           			<img src="<?php echo esc_url($image[0]); ?>" itemprop="contentUrl"
+			                           			width="<?php echo esc_attr($image[1]);?>" height="<?php echo esc_attr($image[2]);?>" 
+			                           			<?php echo $img_srcset; ?>
 			                           			alt="<?php the_title(); ?>" 
 			                           			class="iconhover" 
 			                           			style="display:block;">
+			                           			<meta itemprop="url" content="<?php echo esc_url($image[0]); ?>">
+                              					<meta itemprop="width" content="<?php echo esc_attr($image[1])?>">
+                              					<meta itemprop="height" content="<?php echo esc_attr($image[2])?>">
 			                           		</a> 
 		                             	</div>
 		                         	</div>
-                           		<?php $image = null; $thumbnailURL = null; ?> 
+                           		<?php $image = null; ?> 
                            	<?php } else {
                            		if (has_post_thumbnail( $post->ID ) ) {
                            			if($home_sidebar == true) {
@@ -90,23 +88,24 @@
                            				$imagesize = 'tcol-md-5 tcol-sm-12 tcol-ss-12';
                            			}
                            				$image_id = get_post_thumbnail_id( $post->ID );
-										$image_url = wp_get_attachment_image_src( $image_id, 'full' ); 
-										$thumbnailURL = $image_url[0];
-										$image = aq_resize($thumbnailURL, $img_width, 270, true);
-										if(empty($image)) { $image = $thumbnailURL; }
-										$image_meta = get_post_meta( $image_id, '_wp_attachment_metadata', true );
-          								$img_srcset = wp_calculate_image_srcset(array( $img_width, '270'), $image, $image_meta, $image_id);
+										$image_src = wp_get_attachment_image_src( $image_id, 'full' ); 
+										$thumbnailURL = $image_src[0];
+										$image = aq_resize($image_src[0], $img_width, 270, true, false, false, $image_id);
+										if(empty($image[0])) { $image = $image_src; }
+										$img_srcset = kt_get_srcset_output($img_width, '270', $image_src[0], $image_id);
 										?>
 									<div class="<?php echo esc_attr($imagesize);?>">
-									 	<div class="imghoverclass">
-			                           		<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
-			                           			<img src="<?php echo esc_url($image); ?>"
-			                           			width="<?php echo esc_attr($img_width);?>" height="270" 
-			                           			srcset="<?php echo esc_attr( $img_srcset ); ?>"
-                								sizes="(max-width: <?php echo esc_attr($img_width);?>px) 100vw, <?php echo esc_attr($img_width);?>px"
+									 	<div class="imghoverclass"  itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+			                           		<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
+			                           			<img src="<?php echo esc_url($image[0]); ?>" itemprop="contentUrl"
+			                           			width="<?php echo esc_attr($image[1]);?>" height="<?php echo esc_attr($image[2]);?>" 
+			                           			<?php echo $img_srcset; ?>
 			                           			alt="<?php the_title(); ?>" 
 			                           			class="iconhover" 
 			                           			style="display:block;">
+			                           			<meta itemprop="url" content="<?php echo esc_url($image[0]); ?>">
+                              					<meta itemprop="width" content="<?php echo esc_attr($image[1])?>">
+                              					<meta itemprop="height" content="<?php echo esc_attr($image[2])?>">
 			                           		</a> 
 		                             	</div>
 		                         	</div>
@@ -119,7 +118,7 @@
 	                       			<?php get_template_part('templates/post', 'date'); ?> 
 				                    <header class="home_blog_title">
 			                          	<a href="<?php the_permalink() ?>">
-			                          		<h4 class="entry-title"><?php the_title(); ?></h4>
+			                          		<h4 class="entry-title" itemprop="name headline"><?php the_title(); ?></h4>
 			                          	</a>
 
 			                          		<div class="subhead color_gray">
@@ -142,10 +141,11 @@
 			                        			<?php } ?>
 			                        		</div>
 			                        </header>
-		                        	<div class="entry-content">
+		                        	<div class="entry-content" itemprop="description">
 		                          		<p><?php echo virtue_excerpt(34); ?> <a href="<?php the_permalink() ?>"><?php _e('READ MORE', 'virtue');?></a></p>
 		                        	</div>
 		                      		<footer>
+		                      		<?php do_action( 'kadence_post_mini_excerpt_footer' ); ?>
                        				</footer>
 							</div>
 	                   	</div>

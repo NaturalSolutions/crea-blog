@@ -4,7 +4,16 @@ define( 'OPTIONS_PATH', get_template_directory_uri() . '/themeoptions/options/' 
 load_theme_textdomain('virtue', get_template_directory() . '/languages');
 $alt_stylesheet_path = apply_filters('kt_skin_style_path', LAYOUT_PATH);
 $alt_stylesheets = array(); 
-if ( is_dir($alt_stylesheet_path) ) {if ($alt_stylesheet_dir = opendir($alt_stylesheet_path) ) {while ( ($alt_stylesheet_file = readdir($alt_stylesheet_dir)) !== false ) {if(stristr($alt_stylesheet_file, ".css") !== false) {$alt_stylesheets[$alt_stylesheet_file] = $alt_stylesheet_file;}}}}
+if ( is_dir($alt_stylesheet_path) ) {
+    if ($alt_stylesheet_dir = opendir($alt_stylesheet_path) ) {
+        while ( ($alt_stylesheet_file = readdir($alt_stylesheet_dir)) !== false ) {
+            if(stristr($alt_stylesheet_file, ".css") !== false) {
+                $alt_stylesheets[$alt_stylesheet_file] = $alt_stylesheet_file;
+            }
+        }
+        closedir($alt_stylesheet_dir);
+    }
+}
 
 
 // BEGIN Config
@@ -49,8 +58,8 @@ if ( ! class_exists( 'Redux' ) ) {
         'disable_tracking'     => true,
         'customizer_only'      => true,
         'save_defaults'        => false,
-        'intro_text'           => 'Upgrade to <a href="http://kadencethemes.com/product/virtue-premium-theme/" target="_blank" >Virtue Premium</a> for more great features. Over 50 more theme options, premium sliders and carousels, breadcrumbs, custom post types and much much more!',           
-        'footer_credit'        => __('Thank you for using the Virtue Theme by <a href="http://kadencethemes.com/" target="_blank">Kadence Themes</a>.', 'virtue'),
+        'intro_text'           => 'Upgrade to <a href="https://www.kadencethemes.com/product/virtue-premium-theme/" target="_blank" >Virtue Premium</a> for more great features. Over 50 more theme options, premium sliders and carousels, breadcrumbs, custom post types and much much more!',           
+        'footer_credit'        => __('Thank you for using the Virtue Theme by <a href="https://www.kadencethemes.com/" target="_blank">Kadence Themes</a>.', 'virtue'),
         'hints'                => array(
             'icon'          => 'icon-question',
             'icon_position' => 'right',
@@ -106,8 +115,8 @@ if ( ! class_exists( 'Redux' ) ) {
     'id' => 'main_settings',
     'header' => '',
     'desc' => "<div class='redux-info-field'><h3>".__('Welcome to Virtue Theme Options', 'virtue')."</h3>
-        <p>".__('This theme was developed by', 'virtue')." <a href=\"http://kadencethemes.com/\" target=\"_blank\">Kadence Themes</a></p>
-        <p>".__('For theme documentation visit', 'virtue').": <a href=\"http://docs.kadencethemes.com/virtue/\" target=\"_blank\">docs.kadencethemes.com/virtue/</a>
+        <p>".__('This theme was developed by', 'virtue')." <a href=\"https://kadencethemes.com/\" target=\"_blank\">Kadence Themes</a></p>
+        <p>".__('For theme documentation visit', 'virtue').": <a href=\"http://docs.kadencethemes.com/virtue-free/\" target=\"_blank\">docs.kadencethemes.com/virtue-free/</a>
         <br />
         ".__('For support please visit', 'virtue').": <a href=\"http://wordpress.org/support/theme/virtue\" target=\"_blank\">wordpress.org/support/theme/virtue</a></p></div>",
     'icon_class' => 'icon-large',
@@ -958,6 +967,18 @@ Redux::setSection( $opt_name, array(
             'customizer' => true,
             'desc' => __('Product Page Settings', 'virtue'),
             ),
+        array(
+            'id'=>'product_gallery_slider',
+            'type' => 'switch', 
+            'title' => __('Enable woocommerce slider for product gallery? (must be woocommerce 3.0+)', 'virtue'),
+            "default" => 0,
+        ),
+        array(
+            'id'=>'product_gallery_zoom',
+            'type' => 'switch', 
+            'title' => __('Enable woocommerce hover zoom for product gallery? (must be woocommerce 3.0+)', 'virtue'),
+            "default" => 0,
+        ), 
         array(
             'id'=>'product_tabs',
             'type' => 'switch', 
@@ -1840,9 +1861,9 @@ Redux::setSection( $opt_name, array(
             'id'=>'virtue_custom_favicon',
             'type' => 'media', 
             'customizer' => true,
-            'preview'=> true,
+            'preview'=> false,
             'title' => __('Custom Favicon, *Note depreciated. Use WordPress site icon in customizer.', 'virtue'),
-            'subtitle' => __('Upload a 16px x 16px png/gif/ico image that will represent your website favicon.', 'virtue'),
+            'subtitle' => __('Go to apperance > customize > site identity and set your favicon there.', 'virtue'),
             ),
         array(
             'id'=>'contact_email',
@@ -1903,6 +1924,19 @@ Redux::setSection( $opt_name, array(
             'title' => __('Turn Off Theme Lightbox?', 'virtue'),
             "default" => 0,
             ),
+        array(
+            'id'=>'info_gmaps',
+            'type' => 'info',
+            'desc' => __('Theme Google Maps', 'virtue'),
+            ),
+        array(
+            'id'=>'google_map_api',
+            'type' => 'text',
+            'title' => __('Google Map API', 'virtue'),
+            'subtitle' => __('For best performance add your own API for google maps.', 'virtue'),
+            'description' =>'<a target="_blank" href="https://developers.google.com/maps/documentation/javascript/get-api-key">Get an API code Here</a>',
+            'default' => ''
+            ),  
         ),
     )
 );
@@ -1952,7 +1986,6 @@ function virtue_override_panel() {
     wp_register_style('virtue-redux-custom-css', get_template_directory_uri() . '/themeoptions/options/css/style.css', false, 258);    
     wp_enqueue_style( 'virtue-redux-custom-css' );
     wp_dequeue_style( 'select2-css' );
-    wp_dequeue_script( 'select2-js' );
     wp_dequeue_style( 'redux-elusive-icon' );
     wp_dequeue_style( 'redux-elusive-icon-ie7' );
 }

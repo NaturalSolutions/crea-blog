@@ -59,7 +59,7 @@
                     <?php if($image) : ?>
                       <div class="imghoverclass">
                         <a href="<?php echo esc_url($img_url); ?>" data-rel="lightbox" class="lightboxhover">
-                          <img src="<?php echo esc_url($image); ?>" alt="<?php the_title(); ?>" />
+                          <img src="<?php echo esc_url($image); ?>" alt="<?php the_title_attribute(); ?>" />
                         </a>
                       </div>
                     <?php endif; ?>
@@ -75,10 +75,12 @@
       the_content($readmore); ?>
     </div>
     <footer class="single-footer clearfix">
-      <?php $tags = get_the_tags(); if ($tags) { ?> <span class="posttags"><i class="icon-tag"></i> <?php the_tags('', ', ', ''); ?> </span><?php } ?>
-      
-      <?php wp_link_pages(array('before' => '<nav class="page-nav"><p>' . __('Pages:', 'virtue'), 'after' => '</p></nav>')); ?>
-        <?php
+    <?php 
+        /**
+        * @hooked virtue_post_footer_tags - 20
+        */
+        do_action( 'kadence_single_loop_post_footer' );
+        
   if ( comments_open() ) :
     echo '<p class="kad_comments_link">';
       comments_popup_link( 

@@ -61,20 +61,24 @@ function kadence_title() {
     }
   } elseif (is_archive()) {
     $term = get_term_by('slug', get_query_var('term'), get_query_var('taxonomy'));
-    if ($term) {
+    if ( is_category() ) {
+      $title = single_cat_title( '', false );
+    } elseif ( is_tag() ) {
+        $title = single_tag_title( '', false );
+    } elseif (is_author()) {
+      $title = sprintf(__('Author Archives: %s', 'virtue'), get_the_author());
+    } else if ($term) {
       $title = $term->name;
-    } elseif (is_post_type_archive()) {
-      $title = get_queried_object()->labels->name;
     } elseif (is_day()) {
       $title = sprintf(__('Daily Archives: %s', 'virtue'), get_the_date());
     } elseif (is_month()) {
       $title = sprintf(__('Monthly Archives: %s', 'virtue'), get_the_date('F Y'));
     } elseif (is_year()) {
       $title = sprintf(__('Yearly Archives: %s', 'virtue'), get_the_date('Y'));
-    } elseif (is_author()) {
-      $title = sprintf(__('Author Archives: %s', 'virtue'), get_the_author());
+    } elseif (is_post_type_archive()) {
+      $title = get_queried_object()->labels->name;
     } else {
-      $title = single_cat_title("", false);
+      $title = get_the_archive_title();
     }
   } elseif (is_search()) {
     $title = sprintf(__('Search Results for %s', 'virtue'), get_search_query());   

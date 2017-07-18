@@ -29,7 +29,22 @@ margin-top: 8px;
 margin-left:3px;
 }
 
-
+.pro3  { text-align:center;
+margin-top:50px;
+position:absolute;
+margin-left:25%;}
+.pro3 a{
+	background: #26AE90;
+color: rgb(255, 255, 255) !important;
+border-radius: 3px;
+display: inline-block;
+padding: 8px 12px;
+line-height: 14px;
+text-decoration: none;
+font-weight: bold;
+margin-top: 8px;
+margin-left:3px;
+}
 .appearance_page_options-framework .wrap {
 	background-color:#FFF;
 	width: 90%;

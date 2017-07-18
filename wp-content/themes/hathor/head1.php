@@ -17,19 +17,12 @@
         </div>
         
        
-       
-     
-       
-        
-     
         <!--LOGO END-->
-        
+         <h3 class="menu-toggle"><?php _e( 'Menu', 'hathor' ); ?></h3>
         
         <!--MENU STARTS-->
        
          
-       
-      
         <div id="menu_wrap">
         
        

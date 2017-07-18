@@ -1,4 +1,6 @@
- <?php global $post; 
+<?php 
+// depreciated... will be removed
+ global $post; 
       $headcontent = get_post_meta( $post->ID, '_kad_blog_head', true );
       $height      = get_post_meta( $post->ID, '_kad_posthead_height', true ); 
       $swidth      = get_post_meta( $post->ID, '_kad_posthead_width', true );
@@ -60,7 +62,7 @@
                     <?php if($image) : ?>
                       <div class="imghoverclass">
                         <a href="<?php echo esc_url($img_url); ?>" data-rel="lightbox" class="lightboxhover">
-                          <img src="<?php echo esc_url($image); ?>" alt="<?php the_title(); ?>" />
+                          <img src="<?php echo esc_url($image); ?>" alt="<?php the_title_attribute(); ?>" />
                         </a>
                       </div>
                     <?php endif; ?>
@@ -70,28 +72,33 @@
       <a href="<?php the_permalink() ?>"><h1 class="entry-title" itemprop="name headline"><?php the_title(); ?></h1></a>
       <?php get_template_part('templates/entry', 'meta-subhead'); ?>
     </header>
+
     <div class="entry-content" itemprop="articleBody">
-    <?php global $more; $more = 0; ?>
-    <?php $readmore = __('Continued', 'virtue');
-      the_content($readmore); ?>
+        <?php global $more; $more = 0; 
+            $readmore = __('Continued', 'virtue');
+        
+            the_content($readmore); ?>
     </div>
+
     <footer class="single-footer">
-      <?php $tags = get_the_tags(); if ($tags) { ?> <span class="posttags"><i class="icon-tag"></i> <?php the_tags('', ', ', ''); ?> </span><?php } ?>
-      
-      <?php wp_link_pages(array('before' => '<nav class="page-nav"><p>' . __('Pages:', 'virtue'), 'after' => '</p></nav>')); ?>
-  <?php
-  if ( comments_open() ) :
-    echo '<p class="kad_comments_link">';
-      comments_popup_link( 
-        __( 'Leave a Reply', 'virtue' ), 
-        __( '1 Comment', 'virtue' ), 
-        __( '% Comments', 'virtue' ),
-        'comments-link',
-        __( 'Comments are Closed', 'virtue' )
-    );
-    echo '</p>';
-  endif;
-  ?>
+      <?php  
+        /**
+        * @hooked virtue_post_footer_tags - 20
+        */
+        do_action( 'kadence_single_loop_post_footer' );
+
+        if ( comments_open() ) :
+            echo '<p class="kad_comments_link">';
+            comments_popup_link( 
+                __( 'Leave a Reply', 'virtue' ), 
+                __( '1 Comment', 'virtue' ), 
+                __( '% Comments', 'virtue' ),
+                'comments-link',
+                __( 'Comments are Closed', 'virtue' )
+            );
+            echo '</p>';
+        endif;
+    ?>
     </footer>
-  </article>
+</article>
 

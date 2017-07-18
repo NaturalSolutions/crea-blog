@@ -5,6 +5,7 @@
 </div><!--titleclass-->
 
 <?php $homeid = get_option( 'page_for_posts' );
+    $fullclass     = '';
   if(get_post_meta( $homeid, '_kad_blog_summery', true ) == 'full') {
     $summary    = 'full'; 
     $postclass  = "single-article fullpost";

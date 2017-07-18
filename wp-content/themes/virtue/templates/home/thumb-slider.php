@@ -47,7 +47,7 @@ global $virtue;
             }
              ?>
               
-              <div id="flex" class="flexslider loading" style="max-width:<?php echo esc_attr($slidewidth);?>px; margin-left: auto; margin-right:auto;">
+              <div id="flex" class="flexslider kt-flexslider-thumb loading" style="max-width:<?php echo esc_attr($slidewidth);?>px; margin-left: auto; margin-right:auto;" data-flex-speed="<?php echo esc_attr($pausetime);?>" data-flex-anim-speed="<?php echo esc_attr($transtime);?>" data-flex-animation="<?php echo esc_attr($transtype); ?>" data-flex-auto="<?php echo esc_attr($autoplay);?>">
                   <ul class="slides">
                     <?php foreach ($slides as $slide) :
                         if(!empty($slide['target']) && $slide['target'] == 1) {
@@ -83,32 +83,5 @@ global $virtue;
                           <?php endforeach; ?>
                     </ul>
                  </div><!--Flex thumb-->
-</div><!--Container-->
-<script type="text/javascript">
-      jQuery(window).load(function() {
-            jQuery('#thumbnails').flexslider({
-              animation: "slide",
-                controlNav: false,
-                animationLoop: false,
-                slideshow: false,       
-                itemWidth: 180,
-                itemMargin: 5,
-                asNavFor: '#flex'
-              });
-         
-              jQuery('#flex').flexslider({
-              animation: "<?php echo $transtype ?>",
-              controlNav: false,
-              animationLoop: false,
-              animationSpeed: <?php echo esc_js($transtime); ?>,
-              slideshow: <?php echo esc_js($autoplay); ?>,
-              slideshowSpeed: <?php echo esc_js($pausetime); ?>,
-              sync: "#thumbnails",
-              before: function(slider) {
-                      slider.removeClass('loading');
-                    }  
-              });
-              
-            });
-         </script>
-</div><!--feat-->
+              </div><!--Container-->
+          </div><!--feat-->

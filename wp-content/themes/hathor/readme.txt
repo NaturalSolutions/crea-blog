@@ -1,4 +1,4 @@
-
+ï»¿
 -----------------------------------The theme is licensed Under GNU GPL v3.0-----------------------------------------------
 
 
@@ -100,18 +100,18 @@ Images and screenshot licensed :
 
 1) http://publicdomainarchive.com/public-domain-images-girl-tutu-pink-orange-turquoise-rings-hands/
 
-Public Domain Images – Girl Tutu Pink Orange Turquoise Rings Hands
+Public Domain Images Ã± Girl Tutu Pink Orange Turquoise Rings Hands
 
 2) http://publicdomainarchive.com/public-domain-images-girl-boots-standing-green-grass-field/
- Public Domain Images – Girl Boots Standing Green Grass Field
+ Public Domain Images Ã± Girl Boots Standing Green Grass Field
 
 3) http://publicdomainarchive.com/public-domain-images-woman-earth-globe-white-short-outdoors-water-reflection/
 
-Public Domain Images – Woman Earth Globe White Short Outdoors Water Reflection
+Public Domain Images Ã± Woman Earth Globe White Short Outdoors Water Reflection
 
 4) http://publicdomainarchive.com/public-domain-images-legoland-downtown-atlanta-fox-theatre/
 
-Public Domain Images – Legoland Downtown Atlanta Fox Theatre
+Public Domain Images Ã± Legoland Downtown Atlanta Fox Theatre
 
 
 
@@ -221,6 +221,21 @@ Public Domain Images – Legoland Downtown Atlanta Fox Theatre
 
 * Moblie,tab width scrolling fix
 
+= 3.5 to 3.6 =
+* Moblie,tab menu fixed
+
+= 3.6 to 3.7 =
+
+* service block fixed 
+* add new tag
+
+= 3.7 to 3.8 =
+
+* responsive bug fixed
+* Updated font awesome version
+= 3.8 to 3.9 =
+
+fixed menu
 
 #Limitations: 
 IE7 and IE8 is not compatible.

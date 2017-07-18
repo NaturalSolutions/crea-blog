@@ -5,7 +5,7 @@
  <div id="branding2">
  
 
-    	<!--LOGO START-->
+    	<h3 class="menu-toggle"><?php _e( 'Menu', 'hathor' ); ?></h3><!--LOGO START-->
         <div id="site-title2">
         <?php if (of_get_option('hathor_logo_image')) : ?>
                     <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="logo-img"><img src="<?php echo of_get_option('hathor_logo_image'); ?>" alt="<?php bloginfo( 'name' ); ?>" /></a>
@@ -17,6 +17,7 @@
         </div>
         <div class="desc"><?php bloginfo('description'); ?></div>
         </div>
+        
        </div>
        
        
@@ -30,11 +31,12 @@
          
         
       
-         <div id="menu_wrap2"><div id="navmenu"><?php wp_nav_menu( array( 'container_class' => 'menu-header', 'theme_location' => 'primary' ) ); ?>   </div>
+         <div id="menu_wrap2">
+         <div id="navmenu"><?php wp_nav_menu( array( 'container_class' => 'menu-header', 'theme_location' => 'primary' ) ); ?>   </div>
         
         </div>
          
-    
+     
         </div>
         
       

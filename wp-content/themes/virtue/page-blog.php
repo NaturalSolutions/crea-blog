@@ -79,8 +79,9 @@ Template Name: Blog
 						$wp_query = $temp;
 						wp_reset_query();
 
-						global $virtue; 
-						if(isset($virtue['page_comments']) && $virtue['page_comments'] == '1') {
-							comments_template('/templates/comments.php');
-						} ?>
+                /**
+                * @hooked virtue_page_comments - 20
+                */
+                do_action('kadence_page_footer');
+                ?>
 			</div><!-- /.main -->

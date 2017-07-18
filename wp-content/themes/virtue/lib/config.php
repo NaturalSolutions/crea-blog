@@ -3,6 +3,14 @@
 /**
  * Configuration values
  */
+function virtue_get_options() {
+    $options = get_option( 'virtue' );
+	if ( isset( $_REQUEST['wp_customize'] ) ) {
+    	$options = apply_filters('virtue_theme_options_filter', $options);
+    }
+
+    return $options;
+}
 
 define('POST_EXCERPT_LENGTH', 40);
 
@@ -36,13 +44,13 @@ function kadence_sidebar_class() {
 function kadence_display_sidebar() {
    if (class_exists('woocommerce'))  {
         $sidebar_config = new Kadence_Sidebar(
-        array('kadence_sidebar_on_shop_page','kadence_sidebar_on_blog_post','kadence_sidebar_on_blog_page','is_404','kadence_sidebar_on_home_page','is_cart','is_product','is_checkout','kadence_sidebar_on_myaccount_page',array('is_singular', array('portfolio')), array('is_tax', array('portfolio-type'))
+        array('kadence_sidebar_on_shop_page','kadence_sidebar_on_blog_post','kadence_sidebar_on_blog_page','is_404','kadence_sidebar_on_home_page','is_cart','is_product','is_checkout','kadence_sidebar_on_myaccount_page',array('is_singular', array('portfolio')),array('is_singular', array('kbe_knowledgebase')), array('is_tax', array('portfolio-type'))
         ),
         array('page-fullwidth.php','page-feature.php','page-portfolio.php','page-staff-grid.php','page-testimonial-grid.php','page-contact.php')
       );
   } else {
   $sidebar_config = new Kadence_Sidebar(
-    array('kadence_sidebar_on_blog_post','kadence_sidebar_on_blog_page','is_404','kadence_sidebar_on_home_page', array('is_singular', array('portfolio')), array('is_tax', array('portfolio-type'))
+    array('kadence_sidebar_on_blog_post','kadence_sidebar_on_blog_page','is_404','kadence_sidebar_on_home_page', array('is_singular', array('portfolio')),array('is_singular', array('kbe_knowledgebase')), array('is_tax', array('portfolio-type'))
       ),
     array('page-fullwidth.php','page-feature.php','page-portfolio.php','page-staff-grid.php','page-testimonial-grid.php','page-contact.php')
   );
@@ -96,11 +104,15 @@ function kadence_sidebar_on_blog_page() {
 }
 function kadence_sidebar_on_myaccount_page() {
   if(is_account_page()) {
-    $current_user = wp_get_current_user();
-        if ( 0 == $current_user->ID ) {
-            return true;
-        } else { 
-            return false;
+      if(kad_is_wc_version_gte_2_6() == 1) {
+           return true;
+        } else {
+            $current_user = wp_get_current_user();
+              if ( 0 == $current_user->ID ) {
+                  return true;
+              } else { 
+                  return false;
+              }
         }
    }
 }
@@ -153,9 +165,5 @@ else {
   // return the $classes array
   return $classes;
 }
-/**
- * $content_width is a global variable used by WordPress for max image upload sizes
- * and media embeds (in pixels).
- * Default: 940px is the default Bootstrap container width.
- */
-if (!isset($content_width)) { $content_width = 940; }
+
+if (!isset($content_width)) { $content_width = 1140; }
