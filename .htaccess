@@ -1,4 +1,14 @@
-
+<files wp-config.php>
+	order allow,deny
+	deny from all
+	Options All -Indexes
+</files>
+<Files wp-login.php>
+	order deny,allow
+	Deny from all
+	# allow access from my IP address
+	allow from 192.168.0.94
+</Files>
 # BEGIN WordPress
 
 # END WordPress
