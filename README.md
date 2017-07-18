@@ -11,4 +11,6 @@ UPDATE  `creablog`.`wp_options` SET  `option_value` =  '[LE_NOUVEAU_PATH]' WHERE
 UPDATE  `creablog`.`wp_options` SET  `option_value` =  '[LE_NOUVEAU_PATH]' WHERE  `wp_options`.`option_id` =2;  
 ```
 
+Site de démo : http://213.32.18.30/creablog-demo/  
+
 ###### Tips
