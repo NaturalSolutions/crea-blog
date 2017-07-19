@@ -13,6 +13,9 @@ UPDATE  `creablog`.`wp_options` SET  `option_value` =  '[LE_NOUVEAU_PATH]' WHERE
 
 ###### Tips  
 - Élargir les droits pour permettre les mises à jours automatiques  
-- Site de démo : http://213.32.18.30/creablog-demo/  
+- Site de démo : http://213.32.18.30/creablog-demo/ 
+
+###### Fait
+- Changement des prefix de tables (http://www.wpbeginner.com/wp-tutorials/how-to-change-the-wordpress-database-prefix-to-improve-security/)  
 
 
