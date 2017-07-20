@@ -8,11 +8,11 @@
 		$img_width 		= 270;
 		$postwidthclass = 'col-md-6 col-sm-6';
 	}
-	global $virtue; 
+	global $virtue;
 	if(isset($virtue['blog_title'])) {
 		$btitle = $virtue['blog_title'];
 	} else {
-		$btitle = __('Latest from the Blog', 'virtue'); 
+		$btitle = __('Latest from the Blog', 'virtue');
 	} ?>
 	<div class="clearfix"><h3 class="hometitle"><?php echo esc_html($btitle); ?></h3></div>
 		<div class="row">
@@ -20,16 +20,16 @@
 			$blogcount = $virtue['home_post_count'];
 		} else {
 			$blogcount = '4';
-		} 
-		if(!empty($virtue['home_post_type'])) { 
+		}
+		if(!empty($virtue['home_post_type'])) {
 			$blog_cat 	   = get_term_by ('id',$virtue['home_post_type'],'category');
 			$blog_cat_slug = $blog_cat -> slug;
 		} else {
 			$blog_cat_slug = '';
 		}
 
-			$temp 	  = $wp_query; 
-			$wp_query = null; 
+			$temp 	  = $wp_query;
+			$wp_query = null;
 			$wp_query = new WP_Query();
 			$wp_query->query(array(
 				'posts_per_page' => $blogcount,
@@ -52,7 +52,7 @@
 	                    			}
 	                    			if (has_post_thumbnail( $post->ID ) ) {
 										$image_id = get_post_thumbnail_id( $post->ID );
-										$image_src = wp_get_attachment_image_src( $image_id, 'full' ); 
+										$image_src = wp_get_attachment_image_src( $image_id, 'full' );
 										$image = aq_resize($image_src[0], $img_width, 270, true, false, false, $image_id);
 										if(empty($image)) { $image = array($image_src[0], $image_src[1], $image_src[2]); }
           								$img_srcset = kt_get_srcset_output($img_width, '270', $image_src[0], $image_id);
@@ -66,18 +66,18 @@
 									 	<div class="imghoverclass" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
 			                           		<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
 			                           			<img src="<?php echo esc_url($image[0]); ?>" itemprop="contentUrl"
-			                           			width="<?php echo esc_attr($image[1]);?>" height="<?php echo esc_attr($image[2]);?>" 
+			                           			width="<?php echo esc_attr($image[1]);?>" height="<?php echo esc_attr($image[2]);?>"
 			                           			<?php echo $img_srcset; ?>
-			                           			alt="<?php the_title(); ?>" 
-			                           			class="iconhover" 
+			                           			alt="<?php the_title(); ?>"
+			                           			class="iconhover"
 			                           			style="display:block;">
 			                           			<meta itemprop="url" content="<?php echo esc_url($image[0]); ?>">
                               					<meta itemprop="width" content="<?php echo esc_attr($image[1])?>">
                               					<meta itemprop="height" content="<?php echo esc_attr($image[2])?>">
-			                           		</a> 
+			                           		</a>
 		                             	</div>
 		                         	</div>
-                           		<?php $image = null; ?> 
+                           		<?php $image = null; ?>
                            	<?php } else {
                            		if (has_post_thumbnail( $post->ID ) ) {
                            			if($home_sidebar == true) {
@@ -88,7 +88,7 @@
                            				$imagesize = 'tcol-md-5 tcol-sm-12 tcol-ss-12';
                            			}
                            				$image_id = get_post_thumbnail_id( $post->ID );
-										$image_src = wp_get_attachment_image_src( $image_id, 'full' ); 
+										$image_src = wp_get_attachment_image_src( $image_id, 'full' );
 										$thumbnailURL = $image_src[0];
 										$image = aq_resize($image_src[0], $img_width, 270, true, false, false, $image_id);
 										if(empty($image[0])) { $image = $image_src; }
@@ -98,24 +98,24 @@
 									 	<div class="imghoverclass"  itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
 			                           		<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
 			                           			<img src="<?php echo esc_url($image[0]); ?>" itemprop="contentUrl"
-			                           			width="<?php echo esc_attr($image[1]);?>" height="<?php echo esc_attr($image[2]);?>" 
+			                           			width="<?php echo esc_attr($image[1]);?>" height="<?php echo esc_attr($image[2]);?>"
 			                           			<?php echo $img_srcset; ?>
-			                           			alt="<?php the_title(); ?>" 
-			                           			class="iconhover" 
+			                           			alt="<?php the_title(); ?>"
+			                           			class="iconhover"
 			                           			style="display:block;">
 			                           			<meta itemprop="url" content="<?php echo esc_url($image[0]); ?>">
                               					<meta itemprop="width" content="<?php echo esc_attr($image[1])?>">
                               					<meta itemprop="height" content="<?php echo esc_attr($image[2])?>">
-			                           		</a> 
+			                           		</a>
 		                             	</div>
 		                         	</div>
-		                        	<?php $image = null; $thumbnailURL = null; ?> 
-		                        <?php } else { 
+		                        	<?php $image = null; $thumbnailURL = null; ?>
+		                        <?php } else {
 		                        		$textsize = 'tcol-md-12 tcol-ss-12';
-		                        	} 
+		                        	}
 		                    }?>
 	                       		<div class="<?php echo esc_attr($textsize);?> postcontent">
-	                       			<?php get_template_part('templates/post', 'date'); ?> 
+	                       			<?php get_template_part('templates/post', 'date'); ?>
 				                    <header class="home_blog_title">
 			                          	<a href="<?php the_permalink() ?>">
 			                          		<h4 class="entry-title" itemprop="name headline"><?php the_title(); ?></h4>
@@ -127,10 +127,10 @@
 			                          				<i class="icon-user"></i>
 			                          			</span>
 			                          			<span class="kad-hidepostauthortop"> | </span>
-			                          				<?php $post_category = get_the_category($post->ID); if (!empty($post_category)) { ?> 
-			                          					<span class="postedintop" data-toggle="tooltip" data-placement="top" data-original-title="<?php 
-			                          						foreach ($post_category as $category)  { 
-			                          								echo $category->name .'&nbsp;'; 
+			                          				<?php $post_category = get_the_category($post->ID); if (!empty($post_category)) { ?>
+			                          					<span class="postedintop" data-toggle="tooltip" data-placement="top" data-original-title="<?php
+			                          						foreach ($post_category as $category)  {
+			                          								echo $category->name .'&nbsp;';
 			                          						} ?>"><i class="icon-folder-open"></i></span>
 			                          		 		<?php }?>
 			                          			<?php if(comments_open()) { ?>
@@ -155,8 +155,8 @@
                     <?php endwhile; else: ?>
 						<li class="error-not-found"><?php _e('Sorry, no blog entries found.', 'virtue');?></li>
 					<?php endif; ?>
-                
-				
+
+
 				<?php $wp_query = null; $wp_query = $temp;  // Reset ?>
 				<?php wp_reset_query(); ?>
 

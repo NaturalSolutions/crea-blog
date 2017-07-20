@@ -1,7 +1,7 @@
-<?php  global $virtue; 
+<?php  global $virtue;
 			if(isset($virtue['mobile_switch'])) {
-				$mobile_slider = $virtue['mobile_switch']; 
-			} else { 
+				$mobile_slider = $virtue['mobile_switch'];
+			} else {
 				$mobile_slider = '0';
 			}
 			if(isset($virtue['choose_slider'])) {
@@ -15,7 +15,7 @@
 					get_template_part('templates/mobile_home/mobileflex', 'slider');
 				} else if ($mslider == "video") {
 					get_template_part('templates/mobile_home/mobilevideo', 'block');
-				} 
+				}
 			}
 			if ($slider == "flex") {
 					get_template_part('templates/home/flex', 'slider');
@@ -42,7 +42,7 @@
 					$i++;
 					if($i==2) break;
 				}
-			} 
+			}
 			if($show_pagetitle == true) { ?>
 				<div id="homeheader" class="welcomeclass">
 					<div class="container">
@@ -56,10 +56,10 @@
           	<div class="main <?php echo esc_attr(kadence_main_class()); ?>" role="main">
           	<div class="entry-content" itemprop="mainContentOfPage" itemscope itemtype="http://schema.org/WebPageElement">
 
-      		<?php if(isset($virtue['homepage_layout']['enabled'])) { 
-      			$layout = $virtue['homepage_layout']['enabled']; 
+      		<?php if(isset($virtue['homepage_layout']['enabled'])) {
+      			$layout = $virtue['homepage_layout']['enabled'];
       		  } else {
-      		  	$layout = array("block_one" => "block_one", "block_four" => "block_four"); 
+      		  	$layout = array("block_one" => "block_one", "block_four" => "block_four");
       		  }
 
 				if ($layout):
@@ -79,12 +79,12 @@
 						case 'block_four':
 							if(is_home()) {
 									if(kadence_display_sidebar()) {
-										$display_sidebar = true; 
+										$display_sidebar = true;
 										$fullclass = '';
 									} else {
 										$display_sidebar = false;
 										$fullclass = 'fullwidth';
-									} 
+									}
 									if(isset($virtue['home_post_summery']) and ($virtue['home_post_summery'] == 'full')) {
 										$summery = "full";
 										$postclass = "single-article fullpost";
@@ -92,48 +92,48 @@
 										$summery = "summery";
 										$postclass = "postlist";
 									} ?>
-								<div class="homecontent <?php echo esc_attr($fullclass); ?>  <?php echo esc_attr($postclass); ?> clearfix home-margin"> 
-									<?php while (have_posts()) : the_post(); 
+								<div class="homecontent <?php echo esc_attr($fullclass); ?>  <?php echo esc_attr($postclass); ?> clearfix home-margin">
+									<?php while (have_posts()) : the_post();
 								  			if($summery == 'full') {
 												if($display_sidebar){
-													get_template_part('templates/content', 'fullpost'); 
+													get_template_part('templates/content', 'fullpost');
 												} else {
 													get_template_part('templates/content', 'fullpostfull');
 												}
 											} else {
 												if($display_sidebar){
-												 	get_template_part('templates/content', get_post_format()); 
+												 	get_template_part('templates/content', get_post_format());
 												 } else {
 												 	get_template_part('templates/content', 'fullwidth');
 												 }
 											}
-										endwhile; 
-									
+										endwhile;
+
 										//Page Navigation
 								        if ($wp_query->max_num_pages > 1) :
 								        	virtue_wp_pagenav();
 								        endif; ?>
-								</div> 
+								</div>
 							<?php } else { ?>
-								<div class="homecontent clearfix home-margin"> 
+								<div class="homecontent clearfix home-margin">
 									<?php get_template_part('templates/content', 'page'); ?>
 								</div>
 							<?php }
 						break;
 						case 'block_five':
-								get_template_part('templates/home/blog', 'home'); 
+								get_template_part('templates/home/blog', 'home');
 						break;
 						case 'block_six':
-								get_template_part('templates/home/portfolio', 'carousel');		 
-						break; 
+								get_template_part('templates/home/portfolio', 'carousel');
+						break;
 						case 'block_seven':
-								get_template_part('templates/home/icon', 'menu');		 
+								get_template_part('templates/home/icon', 'menu');
 						break;
 						case 'block_twenty':
-								get_template_part('templates/home/icon', 'menumock');		 
-						break;  
+								get_template_part('templates/home/icon', 'menumock');
+						break;
 					}
 				}
-			endif; ?>  
+			endif; ?>
 			</div>
 		</div><!-- /.main -->

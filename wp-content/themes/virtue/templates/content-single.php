@@ -154,19 +154,19 @@
               <div class="rowtight homepromo">
 
                 <div class="tcol-lg-4 tcol-md-4 tcol-sm-4 tcol-xs-6 tcol-ss-12 home-iconmenu homeitemcount1">
-                  <a href="http://atlasmontblanc.org" target="_blank" title="" style="min-height: 300px">
+                  <a href="http://atlasmontblanc.org" target="_blank" title="" >
                     <img src="http://blog.creamontblanc.org/wp-content/uploads/2017/03/icon_ATLAS.png"><p>Laboratoire collaboratif et citoyens de suivi des milieux alpins dans le massif du Mont-Blanc</p>
                   </a>
                 </div>
 
                 <div class="tcol-lg-4 tcol-md-4 tcol-sm-4 tcol-xs-6 tcol-ss-12 home-iconmenu homeitemcount2">
-                  <a href="http://creamontblanc.org" target="_blank" title="" style="min-height: 300px">
+                  <a href="http://creamontblanc.org" target="_blank" title="" >
                     <img src="http://blog.creamontblanc.org/wp-content/uploads/2017/03/icon_CREA.png"><p>Site Internet du Centre de recherches sur les Écosystèmes d'Altitude (Chamonix-Mont-Blanc)</p>
                   </a>
                 </div>
 
                 <div class="tcol-lg-4 tcol-md-4 tcol-sm-4 tcol-xs-6 tcol-ss-12 home-iconmenu homeitemcount3">
-                  <a href="http://phenoclim.org" target="_blank" title="" style="min-height: 300px">
+                  <a href="http://phenoclim.org" target="_blank" title="" >
                   <img src="http://blog.creamontblanc.org/wp-content/uploads/2017/03/icon_PHENOCLIM.png"><p>Programme scientifique et pédagogique de mesure de l'impact du changement climatique en montagne</p>
                   </a>
                 </div>
