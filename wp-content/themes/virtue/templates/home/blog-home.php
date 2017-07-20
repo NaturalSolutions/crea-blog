@@ -32,7 +32,8 @@
 			$wp_query = null;
 			$wp_query = new WP_Query();
 			$wp_query->query(array(
-				'posts_per_page' => $blogcount,
+				//'posts_per_page' => $blogcount,
+				'posts_per_page' => 20,
 				'category_name'	 => $blog_cat_slug,
 				'ignore_sticky_posts' => true
 				)
@@ -162,3 +163,13 @@
 
 	</div>
 </div> <!--home-blog -->
+
+<!-- Print a link to this category -->
+<div class='homeCat'>
+	<?php
+		wp_list_categories( array(
+			'orderby'    => 'name',
+			'show_count' => true
+		) );
+	?>
+</div>
