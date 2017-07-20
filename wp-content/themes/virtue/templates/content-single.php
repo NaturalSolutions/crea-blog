@@ -15,20 +15,20 @@
           }
       }
       if (!empty($height)) {
-        $slideheight = $height; 
+        $slideheight = $height;
       } else {
         $slideheight = 400;
       }
       if (!empty($swidth)) {
-        $slidewidth = $swidth; 
+        $slidewidth = $swidth;
       } else {
         $slidewidth = $slide_sidebar;
-      } 
+      }
 
     /**
-    * 
+    *
     */
-    do_action( 'kadence_single_post_begin' ); 
+    do_action( 'kadence_single_post_begin' );
     ?>
 <div id="content" class="container">
     <div class="row single-article" itemscope itemtype="http://schema.org/BlogPosting">
@@ -36,13 +36,13 @@
         <?php while (have_posts()) : the_post(); ?>
             <article <?php post_class(); ?>>
             <?php
-             do_action( 'kadence_single_post_before' ); 
+             do_action( 'kadence_single_post_before' );
 
             if ($headcontent == 'flex') { ?>
                 <section class="postfeat">
                     <div class="flexslider kad-light-wp-gallery loading kt-flexslider" style="max-width:<?php echo esc_attr($slidewidth);?>px;" data-flex-speed="7000" data-flex-anim-speed="400" data-flex-animation="fade" data-flex-auto="true">
                         <ul class="slides">
-                        <?php 
+                        <?php
                         $image_gallery = get_post_meta( $post->ID, '_kad_image_gallery', true );
                         if(!empty($image_gallery)) {
                             $attachments = array_filter( explode( ',', $image_gallery ) );
@@ -64,7 +64,7 @@
                                 }
                             }
                         }
-                        ?>                            
+                        ?>
                         </ul>
                     </div> <!--Flex Slides-->
                 </section>
@@ -73,7 +73,7 @@
                     <div class="videofit">
                         <?php echo do_shortcode( get_post_meta( $post->ID, '_kad_post_video', true ) ); ?>
                     </div>
-                    <?php if (has_post_thumbnail( $post->ID ) ) { 
+                    <?php if (has_post_thumbnail( $post->ID ) ) {
                         $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full' ); ?>
                     <div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
                         <meta itemprop="url" content="<?php echo esc_url($image[0]); ?>">
@@ -83,7 +83,7 @@
                     <?php } ?>
                 </section>
             <?php } else if ($headcontent == 'image') {
-                    if (has_post_thumbnail( $post->ID ) ) {        
+                    if (has_post_thumbnail( $post->ID ) ) {
                         $image_id = get_post_thumbnail_id();
                         $image_src = wp_get_attachment_image_src( $image_id, 'full' );
                         $image = aq_resize( $image_src[0], $slidewidth, $slideheight, true, false, false, $image_id); //resize & crop the image
@@ -98,10 +98,10 @@
                                 </a>
                             </div>
                         <?php
-                    } 
+                    }
             } else {
             	if(has_post_thumbnail()) {
-				    $image = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' ); 
+				    $image = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
 				    echo '<div class="meta_post_image" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">';
 				        echo '<meta itemprop="url" content="'.esc_url($image[0]).'">';
 				        echo '<meta itemprop="width" content="'.esc_attr($image[1]).'">';
@@ -117,7 +117,7 @@
                   do_action( 'kadence_single_post_before_header' );
                   ?>
                 <header>
-                    <?php 
+                    <?php
                     /**
                     * @hooked virtue_post_header_title - 20
                     * @hooked virtue_post_header_meta - 30
@@ -129,15 +129,15 @@
                 <div class="entry-content" itemprop="articleBody">
                     <?php
                     do_action( 'kadence_single_post_content_before' );
-                        
-                        the_content(); 
-                      
+
+                        the_content();
+
                     do_action( 'kadence_single_post_content_after' );
                     ?>
                 </div>
 
                 <footer class="single-footer">
-                <?php 
+                <?php
                   /**
                   * @hooked virtue_post_footer_pagination - 10
                   * @hooked virtue_post_footer_tags - 20
@@ -148,6 +148,31 @@
                   ?>
                 </footer>
             </article>
+
+            <div class="home-margin home-padding">
+
+              <div class="rowtight homepromo">
+
+                <div class="tcol-lg-4 tcol-md-4 tcol-sm-4 tcol-xs-6 tcol-ss-12 home-iconmenu homeitemcount1">
+                  <a href="http://atlasmontblanc.org" target="_blank" title="" style="min-height: 300px">
+                    <img src="http://blog.creamontblanc.org/wp-content/uploads/2017/03/icon_ATLAS.png"><p>Laboratoire collaboratif et citoyens de suivi des milieux alpins dans le massif du Mont-Blanc</p>
+                  </a>
+                </div>
+
+                <div class="tcol-lg-4 tcol-md-4 tcol-sm-4 tcol-xs-6 tcol-ss-12 home-iconmenu homeitemcount2">
+                  <a href="http://creamontblanc.org" target="_blank" title="" style="min-height: 300px">
+                    <img src="http://blog.creamontblanc.org/wp-content/uploads/2017/03/icon_CREA.png"><p>Site Internet du Centre de recherches sur les Écosystèmes d'Altitude (Chamonix-Mont-Blanc)</p>
+                  </a>
+                </div>
+
+                <div class="tcol-lg-4 tcol-md-4 tcol-sm-4 tcol-xs-6 tcol-ss-12 home-iconmenu homeitemcount3">
+                  <a href="http://phenoclim.org" target="_blank" title="" style="min-height: 300px">
+                  <img src="http://blog.creamontblanc.org/wp-content/uploads/2017/03/icon_PHENOCLIM.png"><p>Programme scientifique et pédagogique de mesure de l'impact du changement climatique en montagne</p>
+                  </a>
+                </div>
+
+              </div> <!--homepromo -->
+            </div>
             <?php
             /**
             * @hooked virtue_post_authorbox - 20
@@ -155,8 +180,8 @@
             * @hooked virtue_post_comments - 40
             */
             do_action( 'kadence_single_post_after' );
-            
+
             endwhile; ?>
         </div>
-        <?php 
-        do_action( 'kadence_single_post_end' ); 
+        <?php
+        do_action( 'kadence_single_post_end' );
