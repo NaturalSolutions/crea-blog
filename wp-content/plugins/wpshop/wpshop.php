@@ -3,7 +3,7 @@
  * Plugin Name: WP-Shop
  * Plugin URI: http://www.wpshop.fr/documentations/presentation-wpshop/
  * Description: With this plugin you will be able to manage the products you want to sell and user would be able to buy this products
- * Version: 1.4.4.3
+ * Version: 1.4.4.4
  * Author: Eoxia
  * Author URI: http://eoxia.com/
  */
@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**    Allows to refresh css and js file in final user browser    */
-DEFINE( 'WPSHOP_VERSION', '1.4.4.3' );
+DEFINE( 'WPSHOP_VERSION', '1.4.4.4' );
 
 /**    Allows to avoid problem with theme not supporting thumbnail for post    */
 add_theme_support( 'post-thumbnails' );
@@ -92,9 +92,6 @@ add_action( 'the_content', array( 'wpshop_display', 'products_page' ), 1 );
 /**    On plugin activation create the default parameters to use the ecommerce    */
 register_activation_hook( __FILE__, array( 'wpshop_install', 'install_on_activation' ) );
 
-/**    On plugin deactivation call the function to clean the WordPress installation    */
-register_deactivation_hook( __FILE__, array( 'wpshop_install', 'uninstall_wpshop' ) );
-
 /**    Get current plugin version    */
 $current_db_version = get_option( 'wpshop_db_options', 0 );
 
@@ -137,29 +134,6 @@ add_shortcode( 'wpshop_payment_result_unsuccessfull', array( 'wpshop_payment', '
 add_shortcode( 'wpshop_variations', array( 'wpshop_products', 'wpshop_variation' ) );
 add_shortcode( 'wpshop_entities', array( 'wpshop_entities', 'wpshop_entities_shortcode' ) );
 add_shortcode( 'wpshop_attributes', array( 'wpshop_attributes', 'wpshop_attributes_shortcode' ) );
-
-/** Add specific messages for wpshop elements management    */
-// add_filter('post_updated_messages', array('wpshop_messages', 'update_wp_message_list'));
-$file = basename( __FILE__ );
-$folder = basename( dirname( __FILE__ ) );
-$hook = "in_plugin_update_message-{$folder}/{$file}";
-add_action( $hook, 'wps_update_message', 10, 2 ); // 10:priority, 2:arguments #
-function wps_update_message( $currentPluginMetadata, $newPluginMetadata ) {
-	$message = '';
-
-	if ( '1.4.1.6' == $currentPluginMetadata['Version'] ) {
-		$message = sprintf( __( 'For security reason %1$splease read this post%2$s', 'wpshop' ), '<a href="" >', '</a>' );
-	}
-
-	// check "upgrade_notice"
-	if ( isset( $newPluginMetadata->upgrade_notice ) && strlen( trim( $newPluginMetadata->upgrade_notice ) ) > 0 ) {
-		$message = esc_html( $newPluginMetadata->upgrade_notice );
-	}
-
-	if ( ! empty( $message ) ) {
-		echo '<p style="background-color: #d54e21; padding: 10px; color: #f9f9f9; margin-top: 10px"><strong>' . __( 'Important upgrade notice', 'wpshop' ) . ': </strong>' . $message . '</p>';
-	}
-}
 
 require_once 'core/external/wpeo_util/singleton.util.php';
 require_once 'core/external/wpeo_util/init.util.php';

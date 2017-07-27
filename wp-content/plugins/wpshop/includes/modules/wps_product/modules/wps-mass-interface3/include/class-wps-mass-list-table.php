@@ -481,7 +481,7 @@ class WPS_Mass_List_Table extends WP_List_Table {
 			$items_count = $wpdb->prepare(
 				"SELECT COUNT(*)
 				FROM {$wpdb->posts} p
-				INNER JOIN wp_postmeta ON wp_postmeta.post_id = p.ID AND wp_postmeta.meta_key = '_wpshop_product_attribute_set_id' AND wp_postmeta.meta_value LIKE %s
+				INNER JOIN {$wpdb->postmeta} AS PM ON PM.post_id = p.ID AND PM.meta_key = '_wpshop_product_attribute_set_id' AND PM.meta_value LIKE %s
 				WHERE p.post_status IN ( '{$include_states}' )
 				AND p.post_type IN ( '{$post_types}' )
 				AND p.post_title LIKE %s",
@@ -511,7 +511,7 @@ class WPS_Mass_List_Table extends WP_List_Table {
 					)
 				)
 			) SEPARATOR ' ' )
-			FROM wp_posts p1
+			FROM {$wpdb->posts} p1
 			LEFT JOIN {$wpsdb_attribute} attr1 ON attr1.status = 'valid' AND attr1.code = '{$orderby}'
 			LEFT JOIN {$wpsdb_values_decimal} val_dec1 ON val_dec1.attribute_id = attr1.id AND val_dec1.entity_id = p1.ID
 			LEFT JOIN {$wpsdb_values_datetime} val_dat1 ON val_dat1.attribute_id = attr1.id AND val_dat1.entity_id = p1.ID
@@ -564,21 +564,21 @@ class WPS_Mass_List_Table extends WP_List_Table {
 				p.post_date as pdate,
 				GROUP_CONCAT(
 					CONCAT(
-						attr.id, ':',
-						attr.code, ':',
-						attr.frontend_label, ':',
+						attr.id, '&amp;',
+						attr.code, '&amp;',
+						attr.frontend_label, '&amp;',
 						CONCAT(
 							IFNULL( val_dec.value, '' ),
 							IFNULL( val_dat.value, '' ),
 							IFNULL( val_int.value, '' ),
 							IFNULL( val_tex.value, '' ),
 							IFNULL( val_var.value, '' )
-						), ':',
-						attr.is_requiring_unit, ':',
-						IFNULL( unit.unit, '' ), ':',
-						attr.backend_input, ':',
+						), '&amp;',
+						attr.is_requiring_unit, '&amp;',
+						IFNULL( unit.unit, '' ), '&amp;',
+						attr.backend_input, '&amp;',
 						attr.data_type
-					) SEPARATOR ';'
+					) SEPARATOR '&data;'
 				) as data{$extra_select}
 				FROM {$wpdb->posts} p
 				INNER JOIN {$wpdb->postmeta} postmeta ON postmeta.post_id = p.ID AND postmeta.meta_key = %s AND postmeta.meta_value = %d
@@ -670,9 +670,9 @@ class WPS_Mass_List_Table extends WP_List_Table {
 	 * @return array Item reorganized.
 	 */
 	public function data_reorganize( $item ) {
-		$values = explode( ';', $item['data'] );
+		$values = explode( '&data;', $item['data'] );
 		foreach ( $values as $value ) {
-			$value = explode( ':', $value );
+			$value = explode( '&amp;', $value );
 			if ( ! isset( $this->columns_items[ $value[1] ] ) ) {
 				$this->columns_items[ $value[1] ] = array(
 					'id' => $value[0],
@@ -759,8 +759,8 @@ class WPS_Mass_List_Table extends WP_List_Table {
 				$wpdb->prepare(
 					"SELECT s.id, name, slug, default_set, COUNT(p.ID) AS count
 					FROM {$wpsdb_sets} s
-					JOIN wp_postmeta pm ON meta_key = %s AND id = meta_value
-					JOIN wp_posts p ON p.ID = post_id AND post_status IN ( '{$include_states}' ) AND post_type IN ( '{$post_types}' )
+					JOIN {$wpdb->postmeta} pm ON meta_key = %s AND id = meta_value
+					JOIN {$wpdb->posts} p ON p.ID = post_id AND post_status IN ( '{$include_states}' ) AND post_type IN ( '{$post_types}' )
 					WHERE entity_id = %d
 					AND status = %s
 					GROUP BY id",

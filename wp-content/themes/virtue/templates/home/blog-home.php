@@ -165,11 +165,11 @@
 </div> <!--home-blog -->
 
 <!-- Print a link to this category -->
-<div class='homeCat'>
+<!-- <div class='homeCat'> -->
 	<?php
-		wp_list_categories( array(
+		/*wp_list_categories( array(
 			'orderby'    => 'name',
 			'show_count' => true
-		) );
+		) );*/
 	?>
-</div>
+<!-- </div> -->
