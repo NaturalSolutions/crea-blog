@@ -1,14 +1,21 @@
-<div class="page-header">
-	<h1 class="entry-title" itemprop="name">
-		<?php echo apply_filters('kadence_page_title', kadence_title() ); ?>
-	</h1>
-   	<?php global $post; 
-  	if(is_page()) {
-  		$bsub = get_post_meta( $post->ID, '_kad_subtitle', true );
-  		if(!empty($bsub)){
-  			echo '<p class="subtitle"> '.$bsub.' </p>';
-  		} 
-	} else if(is_category()) { 
-   		echo '<p class="subtitle">'.category_description().' </p>';
-   	} ?>
-</div>
+<div id="pageheader" class="titleclass">
+	<div class="container">
+		<div class="page-header">
+			<h1 class="entry-title" itemprop="name">
+				<?php echo virtue_title(); ?>
+			</h1>
+			<?php 
+			if( is_page() ) {
+				global $post;
+				$bsub = get_post_meta( $post->ID, '_kad_subtitle', true );
+				if( !empty( $bsub ) ){
+					echo '<p class="subtitle"> '.wp_kses_post( $bsub ).' </p>';
+				} 
+			} else if( is_category() ) { 
+				echo '<p class="subtitle">'.wp_kses_post( category_description() ).' </p>';
+			} else if( is_tag() ) {
+				echo '<p class="subtitle">'.wp_kses_post( tag_description() ).' </p>';
+			} ?>
+		</div>
+	</div><!--container-->
+</div><!--titleclass-->

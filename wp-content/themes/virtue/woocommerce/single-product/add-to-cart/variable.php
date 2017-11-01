@@ -23,7 +23,7 @@ $attribute_keys = array_keys( $attributes );
 	<?php do_action( 'woocommerce_before_variations_form' ); ?>
 
 	<?php if ( empty( $available_variations ) && false !== $available_variations ) : ?>
-		<p class="stock out-of-stock"><?php _e( 'This product is currently out of stock and unavailable.', 'virtue' ); ?></p>
+		<p class="stock out-of-stock"><?php esc_html_e( 'This product is currently out of stock and unavailable.', 'virtue' ); ?></p>
 	<?php else : ?>
 	<table class="variations" cellspacing="0">
 		<tbody>

@@ -7,15 +7,13 @@ USE a plugin like : https://wordpress.org/plugins/header-and-footer-scripts/
 <?php wp_head(); ?>
 */
 
-get_template_part('templates/head'); ?>
-  	
-  	<body <?php body_class(); ?>>
-  	<?php 
-	do_action('virtue_after_body');
+get_template_part( 'templates/head' ); ?>
+	
+	<body <?php body_class(); ?>>
+	<?php 
+		do_action( 'virtue_after_body' );
 	?>
 
-    <div id="wrapper" class="container">
-    <?php 
-
-        
-        get_template_part('templates/header');
+	<div id="wrapper" class="container">
+	<?php 
+		get_template_part( 'templates/header' );

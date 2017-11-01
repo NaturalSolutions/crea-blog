@@ -23,7 +23,7 @@ class cmb_Meta_Box_Show_Filters {
 		if ( ! isset( $meta_box['show_on']['key'] ) || 'id' !== $meta_box['show_on']['key'] )
 			return $display;
 
-		$object_id = is_admin() ? cmb_Meta_Box::get_object_id() : @get_the_id();
+		$object_id = is_admin() ? cmb_Meta_Box::get_object_id() : get_the_id();
 
 		if ( ! $object_id )
 			return false;

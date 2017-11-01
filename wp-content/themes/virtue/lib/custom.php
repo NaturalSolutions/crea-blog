@@ -2,102 +2,63 @@
 /**
  * Custom functions
  */
-global $virtue;
 
-
-//Page Navigation
-
-function virtue_wp_pagenav() {
-
-  global $wp_query, $wp_rewrite;
-  $pages = '';
-  $big = 999999999; // need an unlikely integer
-  $max = $wp_query->max_num_pages;
-  if (!$current = get_query_var('paged')) $current = 1;
-  $args['base'] = str_replace($big, '%#%', esc_url( get_pagenum_link( $big ) ) );
-  $args['total'] = $max;
-  $args['current'] = $current;
-  $args['add_args'] = false;
-
-  $total = 1;
-  $args['mid_size'] = 3;
-  $args['end_size'] = 1;
-  $args['prev_text'] = '«';
-  $args['next_text'] = '»';
- 
-  if ($max > 1) echo '<div class="wp-pagenavi">';
-  if ($total == 1 && $max > 1)
-    echo paginate_links($args);
-  if ($max > 1) echo '</div>';
-}
 
 function virtue_lightbox_off() {
-  global $virtue; 
-  if(isset($virtue['kadence_lightbox']) && $virtue['kadence_lightbox'] == 1 ) {
-    echo  '<script type="text/javascript">jQuery(document).ready(function ($) {var magnificPopupEnabled = false;$.extend(true, $.magnificPopup.defaults, {disableOn: function() {return false;}});});</script>';
-  }
-}
-add_action('wp_footer', 'virtue_lightbox_off');
-
-add_action('virtue_after_body', 'virtue_skip_link', 1);
-function virtue_skip_link() {
- echo '<div id="kt-skip-link"><a href="#content">Skip to Main Content</a></div>';
-}
-
-function kadence_hex2rgb($hex) {
-   $hex = str_replace("#", "", $hex);
-
-   if(strlen($hex) == 3) {
-      $r = hexdec(substr($hex,0,1).substr($hex,0,1));
-      $g = hexdec(substr($hex,1,1).substr($hex,1,1));
-      $b = hexdec(substr($hex,2,1).substr($hex,2,1));
-   } else {
-      $r = hexdec(substr($hex,0,2));
-      $g = hexdec(substr($hex,2,2));
-      $b = hexdec(substr($hex,4,2));
-   }
-   $rgb = array($r, $g, $b);
-   //return implode(",", $rgb); // returns the rgb values separated by commas
-   return $rgb; // returns an array with the rgb values
-}
-// Add support for qtranslate
-include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-if ( is_plugin_active('qtranslate/qtranslate.php') || is_plugin_active('mqtranslate/mqtranslate.php') ) {
-    add_action('portfolio-type_add_form',  'qtrans_modifyTermFormFor');
-    add_action('portfolio-type_edit_form',   'qtrans_modifyTermFormFor');
-    add_action('product_cat_add_form',   'qtrans_modifyTermFormFor');
-    add_action('product_cat_edit_form',  'qtrans_modifyTermFormFor');
-    add_action('product_tag_add_form',   'qtrans_modifyTermFormFor');
-    add_action('product_tag_edit_form',  'qtrans_modifyTermFormFor');
-    add_filter('woocommerce_cart_item_name', 'qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0);
-}
-add_filter( 'max_srcset_image_width','kt_srcset_max');
-function kt_srcset_max($string) {
-  return 2000;
-}
-function virtue_template_override_init() {
-	if(class_exists('EventOrganiser_Admin_Page')) {
-	    add_filter('template_include', 'virtue_evento_venue_overide', 20);
-	    function virtue_evento_venue_overide($template) {
-	          if(is_tax( 'event-venue' ) ) {
-	            remove_filter('template_include', array('Kadence_Wrapping', 'wrap'), 101);
-	            add_filter('template_include', array('Kadence_Wrapping', 'wrap'), 99999);
-	          }
-	          return $template;
-	    }
+	global $virtue; 
+	if( isset( $virtue[ 'kadence_lightbox'] ) && $virtue[ 'kadence_lightbox' ] == 1 ) {
+		echo  '<script type="text/javascript">jQuery(document).ready(function ($) {var magnificPopupEnabled = false;$.extend(true, $.magnificPopup.defaults, {disableOn: function() {return false;}});});</script>';
 	}
 }
-add_action('init', 'virtue_template_override_init');
-function kt_get_srcset($width,$height,$url,$id) {
-  if(empty($id) || empty($url)) {
-    return;
-  }
+add_action( 'wp_footer', 'virtue_lightbox_off' );
+
+add_action( 'virtue_after_body', 'virtue_skip_link', 1 );
+function virtue_skip_link() {
+	echo '<div id="kt-skip-link"><a href="#content">Skip to Main Content</a></div>';
+}
+
+function virtue_hex2rgb( $hex ) {
+	$hex = str_replace( "#", "", $hex );
+
+	if( strlen( $hex ) == 3 ) {
+		$r = hexdec( substr( $hex,0,1 ).substr( $hex,0,1 ) );
+		$g = hexdec( substr( $hex,1,1 ).substr( $hex,1,1 ) );
+		$b = hexdec( substr( $hex,2,1 ).substr( $hex,2,1 ) );
+	} else {
+		$r = hexdec( substr( $hex,0,2 ) );
+		$g = hexdec( substr( $hex,2,2 ) );
+		$b = hexdec( substr( $hex,4,2 ) );
+	}
+	$rgb = array( $r, $g, $b );
+
+	return $rgb;
+}
+
+function virtue_template_override_init() {
+	if( class_exists( 'EventOrganiser_Admin_Page' ) ) {
+		add_filter( 'template_include', 'virtue_evento_venue_overide', 20 );
+		function virtue_evento_venue_overide($template) {
+			if(is_tax( 'event-venue' ) ) {
+				remove_filter('template_include', array('Kadence_Wrapping', 'wrap'), 101);
+				add_filter('template_include', array('Kadence_Wrapping', 'wrap'), 99999);
+			}
+			return $template;
+		}
+	}
+}
+add_action( 'init', 'virtue_template_override_init' );
+
+// Depreciated
+function kt_get_srcset( $width,$height,$url,$id ) {
+	if(empty($id) || empty($url)) {
+		return;
+	}
   
-  $image_meta = get_post_meta( $id, '_wp_attachment_metadata', true );
-  if(empty($image_meta['file'])){
-    return;
-  }
-  // If possible add in our images on the fly sizes
+	$image_meta = get_post_meta( $id, '_wp_attachment_metadata', true );
+	if(empty($image_meta['file'])){
+		return;
+	}
+	// If possible add in our images on the fly sizes
   	$ext = substr($image_meta['file'], strrpos($image_meta['file'], "."));
   	$pathflyfilename = str_replace($ext,'-'.$width.'x'.$height.'' . $ext, $image_meta['file']);
   	$retina_w = $width*2;
@@ -177,31 +138,36 @@ function kadence_html_tag_schema() {
 
 // Ecerpt Length
 
-function virtue_excerpt($limit) {
-      $excerpt = explode(' ', get_the_excerpt(), $limit);
-      if (count($excerpt)>=$limit) {
-        array_pop($excerpt);
-        $excerpt = implode(" ",$excerpt).'...';
-      } else {
-        $excerpt = implode(" ",$excerpt);
-      } 
-      $excerpt = preg_replace('`\[[^\]]*\]`','',$excerpt);
-      return $excerpt;
-    }
+function virtue_excerpt( $limit ) {
+	$excerpt = explode(' ', get_the_excerpt(), $limit);
 
-function virtue_content($limit) {
-      $content = explode(' ', get_the_content(), $limit);
-      if (count($content)>=$limit) {
-        array_pop($content);
-        $content = implode(" ",$content).'...';
-      } else {
-        $content = implode(" ",$content);
-      } 
-      $content = preg_replace('/\[.+\]/','', $content);
-      $content = apply_filters('the_content', $content); 
-      $content = str_replace(']]>', ']]&gt;', $content);
-      return $content;
-    }
+	if (count($excerpt)>=$limit) {
+		array_pop($excerpt);
+		$excerpt = implode(" ",$excerpt).'...';
+	} else {
+		$excerpt = implode(" ",$excerpt);
+	} 
+	
+	$excerpt = preg_replace('`\[[^\]]*\]`','',$excerpt);
+	return $excerpt;
+}
+
+function virtue_content( $limit ) {
+	$content = explode(' ', get_the_content(), $limit);
+	if (count($content)>=$limit) {
+		array_pop($content);
+		$content = implode(" ",$content).'...';
+	} else {
+		$content = implode(" ",$content);
+	} 
+	
+	$content = preg_replace('/\[.+\]/','', $content);
+	$content = apply_filters('the_content', $content); 
+	$content = str_replace(']]>', ']]&gt;', $content);
+	return $content;
+}
+
+
 
 /* === Ambrosite Next/Previous Post Link Plus ===
 Author: ambrosite
@@ -573,13 +539,6 @@ function kadence_adjacent_post_link_plus($args = '', $format = '%link &raquo;', 
   echo apply_filters( "{$adjacent}_post_link_plus", $output, $r );
 
   return true;
-}
-if (class_exists('SitePress')) {
-global $sitepress;
-add_filter('get_previous_post_plus_join', array($sitepress,'get_adjacent_post_join'));
-add_filter('get_next_post_plus_join', array($sitepress,'get_adjacent_post_join'));
-add_filter('get_previous_post_plus_where', array($sitepress,'get_adjacent_post_where'));
-add_filter('get_next_post_plus_where', array($sitepress,'get_adjacent_post_where'));
 }
 
 

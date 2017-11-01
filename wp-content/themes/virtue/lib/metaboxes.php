@@ -1,9 +1,6 @@
 <?php
 /**
- * @category Virtue Theme
- * @package  Metaboxes
- * @license  http://www.opensource.org/licenses/gpl-license.php GPL v2.0 (or later)
- * @link     https://github.com/jaredatch/Custom-Metaboxes-and-Fields-for-WordPress
+* Meta Boxs
  */
 
 add_filter( 'cmb_meta_boxes', 'virtue_metaboxes' );
@@ -14,8 +11,8 @@ add_filter( 'cmb_meta_boxes', 'virtue_metaboxes' );
  * @return array
  */
 //add_filter('cmb_icomoon', 'cmb_icomoon');
-add_filter( 'cmb_render_imag_select_taxonomy', 'imag_render_imag_select_taxonomy', 10, 2 );
-function imag_render_imag_select_taxonomy( $field, $meta ) {
+add_filter( 'cmb_render_imag_select_taxonomy', 'virtue_render_imag_select_taxonomy', 10, 2 );
+function virtue_render_imag_select_taxonomy( $field, $meta ) {
 
     wp_dropdown_categories(array(
             'show_option_none' => __( "All", 'virtue' ),

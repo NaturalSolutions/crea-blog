@@ -3,50 +3,50 @@ function kadence_custom_css() {
 
 global $virtue; 
 //Logo
-if(isset($virtue['logo_padding_top'])) {
-$logo_padding_top = '#logo {padding-top:'.$virtue['logo_padding_top'].'px;}';
+if( isset( $virtue[ 'logo_padding_top' ] ) ) {
+	$logo_padding_top = '#logo {padding-top:'.esc_attr( $virtue[ 'logo_padding_top' ] ).'px;}';
 } else {
-  $logo_padding_top = '#logo {padding-top:25px;}';
+	$logo_padding_top = '#logo {padding-top:25px;}';
 }
-if(isset($virtue['logo_padding_bottom'])) {
- $logo_padding_bottom = '#logo {padding-bottom:'.$virtue['logo_padding_bottom'].'px;}';
- } else {
-  $logo_padding_bottom = '#logo {padding-bottom:10px;}';
- } 
- if(isset($virtue['logo_padding_left'])) {
- $logo_padding_left = '#logo {margin-left:'.$virtue['logo_padding_left'].'px;}';
- } else {
-$logo_padding_left = '#logo {margin-left:0px;}';
- }
- if(isset($virtue['logo_padding_right'])) {
-  $logo_padding_right = '#logo {margin-right:'.$virtue['logo_padding_right'].'px;}';
+if( isset( $virtue[ 'logo_padding_bottom' ] ) ) {
+	$logo_padding_bottom = '#logo {padding-bottom:'.esc_attr( $virtue[ 'logo_padding_bottom' ] ).'px;}';
 } else {
-  $logo_padding_right = '#logo {margin-right:0px;}';
+	$logo_padding_bottom = '#logo {padding-bottom:10px;}';
+} 
+if( isset( $virtue[ 'logo_padding_left' ] ) ) {
+	$logo_padding_left = '#logo {margin-left:'.esc_attr( $virtue[ 'logo_padding_left' ] ).'px;}';
+} else {
+	$logo_padding_left = '#logo {margin-left:0px;}';
 }
-if(isset($virtue['menu_margin_top'])) {
- $menu_margin_top = '#nav-main {margin-top:'.$virtue['menu_margin_top'].'px;}';
- } else {
-  $menu_margin_top = '#nav-main {margin-top:40px;}';
- } 
- if(isset($virtue['menu_margin_bottom'])) {
- $menu_margin_bottom = '#nav-main {margin-bottom:'.$virtue['menu_margin_bottom'].'px;}';
+if( isset( $virtue[ 'logo_padding_right' ] ) ) {
+	$logo_padding_right = '#logo {margin-right:'.esc_attr( $virtue[ 'logo_padding_right' ] ).'px;}';
 } else {
-  $menu_margin_bottom = '#nav-main {margin-bottom:10px;}';
+	$logo_padding_right = '#logo {margin-right:0px;}';
+}
+if( isset( $virtue[ 'menu_margin_top' ] ) ) {
+	$menu_margin_top = '#nav-main {margin-top:'.esc_attr( $virtue[ 'menu_margin_top' ] ).'px;}';
+} else {
+	$menu_margin_top = '#nav-main {margin-top:40px;}';
+} 
+if( isset( $virtue[ 'menu_margin_bottom' ] ) ) {
+	$menu_margin_bottom = '#nav-main {margin-bottom:'.esc_attr( $virtue[ 'menu_margin_bottom' ] ).'px;}';
+} else {
+	$menu_margin_bottom = '#nav-main {margin-bottom:10px;}';
 }
 //Typography
-  if(!empty($virtue['font_h1'])) {
-  $font_family = '.headerfont, .tp-caption {font-family:'.$virtue['font_h1']['font-family'].';} 
-  .topbarmenu ul li {font-family:'.$virtue['font_primary_menu']['font-family'].';}
-  #kadbreadcrumbs {font-family:'.$virtue['font_p']['font-family'].';}';
+if( ! empty( $virtue[ 'font_h1' ] ) ) {
+	$font_family = '.headerfont, .tp-caption {font-family:'.esc_attr( $virtue[ 'font_h1' ][ 'font-family' ] ).';} 
+.topbarmenu ul li {font-family:'.esc_attr( $virtue[ 'font_primary_menu' ][ 'font-family' ] ).';}
+#kadbreadcrumbs {font-family:'.esc_attr( $virtue[ 'font_p' ][ 'font-family' ] ).';}';
 } else {
-  $font_family = '';
+	$font_family = '';
 }
 
 //Basic Styling
 
 if(!empty($virtue['primary_color'])) {
-  $primaryrgb = kadence_hex2rgb($virtue['primary_color']); 
-  $color_primary = '.home-message:hover {background-color:'.$virtue['primary_color'].'; background-color: rgba('.$primaryrgb[0].', '.$primaryrgb[1].', '.$primaryrgb[2].', 0.6);}
+	$primaryrgb = virtue_hex2rgb($virtue['primary_color']); 
+	$color_primary = '.home-message:hover {background-color:'.$virtue['primary_color'].'; background-color: rgba('.$primaryrgb[0].', '.$primaryrgb[1].', '.$primaryrgb[2].', 0.6);}
   nav.woocommerce-pagination ul li a:hover, .wp-pagenavi a:hover, .panel-heading .accordion-toggle, .variations .kad_radio_variations label:hover, .variations .kad_radio_variations label.selectedValue {border-color: '.$virtue['primary_color'].';}
   a, #nav-main ul.sf-menu ul li a:hover, .product_price ins .amount, .price ins .amount, .color_primary, .primary-color, #logo a.brand, #nav-main ul.sf-menu a:hover,
   .woocommerce-message:before, .woocommerce-info:before, #nav-second ul.sf-menu a:hover, .footerclass a:hover, .posttags a:hover, .subhead a:hover, .nav-trigger-case:hover .kad-menu-name, 
@@ -56,7 +56,7 @@ if(!empty($virtue['primary_color'])) {
 #containerfooter .menu li a:hover, .bg_primary, .portfolionav a:hover, .home-iconmenu a:hover, p.demo_store, .topclass, #commentform .form-submit #submit, .kad-hover-bg-primary:hover, .widget_shopping_cart_content .checkout,
 .login .form-row .button, .variations .kad_radio_variations label.selectedValue, #payment #place_order, .wpcf7 input.wpcf7-back, .shop_table .actions input[type=submit].checkout-button, .cart_totals .checkout-button, input[type="submit"].button, .order-actions .button  {background: '.$virtue['primary_color'].';}';
 } else {
-  $color_primary = '';
+	$color_primary = '';
 }
 if(!empty($virtue['primary20_color'])) {
   $color_primary30 =  'a:hover {color: '.$virtue['primary20_color'].';} .kad-btn-primary:hover, .login .form-row .button:hover, #payment #place_order:hover, .yith-wcan .yith-wcan-reset-navigation:hover, .widget_shopping_cart_content .checkout:hover,
@@ -302,7 +302,7 @@ if(!empty($virtue['boxed_bg_color']) || !empty($virtue['bg_boxed_bg_img']['url']
     $boxedclass = '';
   }
 
-  if(isset($virtue['shop_title_uppercase']) and $virtue['shop_title_uppercase'] == 0) {
+  if( isset( $virtue['shop_title_uppercase']) and $virtue['shop_title_uppercase'] == 0) {
   $ptitle_uppercase = '.product_item .product_details h5 {text-transform: none;}';
 } else {
   $ptitle_uppercase = '';
@@ -357,10 +357,7 @@ if (!empty($virtue['custom_css'])) {
 
 $kad_custom_css = '<style type="text/css">'.$logo_padding_top.$logo_padding_bottom.$logo_padding_left.$logo_padding_right.$menu_margin_top.$menu_margin_bottom.$font_family.$color_primary.$color_primary30.$color_grayfont.$quantity_input
 .$color_footerfont.$contentclass.$topbarclass.$headerclass.$menuclass.$mobileclass.$footerclass.$boxedclass.$show_author.$ptitle_uppercase.$menu_layout_center.$x2logo.$ptitle_minheight.$topbar_layout.$wp_image_border.$mobileslider.$custom_css.'</style>';
-  echo $kad_custom_css;
-}
-function kad_custom_css_output() {
- echo get_option('kad_css_custom');
+	echo $kad_custom_css;
 }
 add_action('wp_head', 'kadence_custom_css');
 ?>

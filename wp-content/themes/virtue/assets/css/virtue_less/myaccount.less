@@ -172,7 +172,6 @@ table.shop_table.customer_details, .woocommerce .shop_table.order_details{
 }
 
 ul.order_details {
-  @include clearfix;
   list-style: none;
   position: relative;
   margin: 3.631em 0;
@@ -193,7 +192,9 @@ ul.order_details {
   &:after {
     top: auto;
     bottom: -16px;
-    @include transform(rotate(180deg));
+    -ms-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
   }
 
   li {

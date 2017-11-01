@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  ?>
 		<div id="content" class="container">
    		<div class="row">
-      <div class="main <?php echo kadence_main_class(); ?>" role="main">
+      <div class="main <?php echo virtue_main_class(); ?>" role="main">
       <?php do_action( 'woocommerce_before_main_content' ); ?>
 
       	<?php if ( apply_filters( 'woocommerce_show_page_title', true ) ) : ?>

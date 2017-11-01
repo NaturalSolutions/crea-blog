@@ -5,7 +5,6 @@
 <?php wp_footer(); ?>
 
 */	
-
-      get_template_part('templates/footer'); ?>
-  </body>
+		get_template_part('templates/footer'); ?>
+	</body>
 </html>

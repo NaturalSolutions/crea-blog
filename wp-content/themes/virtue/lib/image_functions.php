@@ -9,6 +9,10 @@ function virtue_lazy_load_filter() {
   	}
   	return apply_filters('virtue_lazy_load', $lazy);
 }
+add_filter( 'max_srcset_image_width','virtue_srcset_max');
+function virtue_srcset_max($string) {
+  return 2000;
+}
 
 function virtue_img_placeholder() {
   return get_template_directory_uri() . '/assets/img/placement.png';
