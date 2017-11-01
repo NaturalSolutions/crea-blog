@@ -149,3 +149,18 @@ h1, h2, h3, h4, h5 {
     display: inherit;
   }
 }
+
+@media
+  only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (   min--moz-device-pixel-ratio: 2),
+  only screen and (     -o-min-device-pixel-ratio: 2/1),
+  only screen and (        min-device-pixel-ratio: 2),
+  only screen and (                min-resolution: 192dpi),
+  only screen and (                min-resolution: 2dppx) {
+  .thelogo-text  {
+    font-size: 28px;
+  }
+  #logo .kad-retina-logo{
+    display: inline-block !important;
+  }
+}
