@@ -108,7 +108,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .col-md-12>#nav-main .sf-menu li {
-  max-width: 12.5%;
+  max-width: 12%;
   vertical-align: middle;
 }
 
@@ -138,4 +138,14 @@ h1, h2, h3, h4, h5 {
   font-weight: 400;
   /*font-size: 1.8em;*/
   vertical-align: text-top;
+}
+
+/*MEDIA QUERIES*/
+@media (max-width: 991px) {
+  .kad_tagline.belowlogo-text  {
+    border-left: none;
+    text-align: center;
+    height: auto;
+    display: inherit;
+  }
 }
