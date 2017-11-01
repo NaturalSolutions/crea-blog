@@ -1,0 +1,141 @@
+/*
+ Theme Name:   Virtue Child
+ Theme URI:
+ Description:  Virtue Child Theme
+ Author:       NS
+ Author URI:
+ Template:     virtue
+ Version:      1.0.0
+ License:      GNU General Public License v2 or later
+ License URI:  http://www.gnu.org/licenses/gpl-2.0.html
+ Tags:         custom-colors, two-columns, one-column, custom-header, custom-menu, featured-images, translation-ready, theme-options, blog, e-commerce, portfolio, rtl-language-support
+ Text Domain:  virtue-child
+*/
+
+.topclass {
+  background: black;
+}
+
+@font-face {
+  font-family: Klavika;
+  src: url(./fonts/klavika-medium-webfont.eot);
+  src: url(./fonts/klavika-medium-webfont.eot?#iefix) format('embedded-opentype'), url(./fonts/klavika-medium-webfont.woff2) format('woff2'), url(./fonts/klavika-medium-webfont.woff) format('woff'), url(./fonts/klavika-medium-webfont.ttf) format('truetype'), url(./fonts/klavika-medium-webfont.svg#Klavika) format('svg');
+  font-weight: 500;
+  font-style: normal
+}
+
+@font-face {
+  font-family: Klavika;
+  src: url(./fonts/klavika-lightitalic-webfont.eot);
+  src: url(./fonts/klavika-lightitalic-webfont.eot?#iefix) format('embedded-opentype'), url(./fonts/klavika-lightitalic-webfont.woff2) format('woff2'), url(./fonts/klavika-lightitalic-webfont.woff) format('woff'), url(./fonts/klavika-lightitalic-webfont.ttf) format('truetype'), url(./fonts/klavika-lightitalic-webfont.svg#Klavika) format('svg');
+  font-weight: 300;
+  font-style: italic
+}
+
+@font-face {
+  font-family: Klavika;
+  src: url(./fonts/klavika-mediumitalic-webfont.eot);
+  src: url(./fonts/klavika-mediumitalic-webfont.eot?#iefix) format('embedded-opentype'), url(./fonts/klavika-mediumitalic-webfont.woff2) format('woff2'), url(./fonts/klavika-mediumitalic-webfont.woff) format('woff'), url(./fonts/klavika-mediumitalic-webfont.ttf) format('truetype'), url(./fonts/klavika-mediumitalic-webfont.svg#Klavika) format('svg');
+  font-weight: 500;
+  font-style: italic
+}
+
+@font-face {
+  font-family: Klavika;
+  src: url(./fonts/klavika-light-webfont.eot);
+  src: url(./fonts/klavika-light-webfont.eot?#iefix) format('embedded-opentype'), url(./fonts/klavika-light-webfont.woff2) format('woff2'), url(./fonts/klavika-light-webfont.woff) format('woff'), url(./fonts/klavika-light-webfont.ttf) format('truetype'), url(./fonts/klavika-light-webfont.svg#Klavika) format('svg');
+  font-weight: 300;
+  font-style: normal
+}
+
+@font-face {
+  font-family: Klavika;
+  src: url(./fonts/klavika-bolditalic-webfont.eot);
+  src: url(./fonts/klavika-bolditalic-webfont.eot?#iefix) format('embedded-opentype'), url(./fonts/klavika-bolditalic-webfont.woff2) format('woff2'), url(./fonts/klavika-bolditalic-webfont.woff) format('woff'), url(./fonts/klavika-bolditalic-webfont.ttf) format('truetype'), url(./fonts/klavika-bolditalic-webfont.svg#Klavika) format('svg');
+  font-weight: 700;
+  font-style: italic
+}
+
+@font-face {
+  font-family: Klavika;
+  src: url(./fonts/klavika-regular-webfont.eot);
+  src: url(./fonts/klavika-regular-webfont.eot?#iefix) format('embedded-opentype'), url(./fonts/klavika-regular-webfont.woff2) format('woff2'), url(./fonts/klavika-regular-webfont.woff) format('woff'), url(./fonts/klavika-regular-webfont.ttf) format('truetype'), url(./fonts/klavika-regular-webfont.svg#Klavika) format('svg');
+  font-weight: 400;
+  font-style: normal
+}
+
+@font-face {
+  font-family: Klavika;
+  src: url(./fonts/klavika-regularitalic-webfont.eot);
+  src: url(./fonts/klavika-regularitalic-webfont.eot?#iefix) format('embedded-opentype'), url(./fonts/klavika-regularitalic-webfont.woff2) format('woff2'), url(./fonts/klavika-regularitalic-webfont.woff) format('woff'), url(./fonts/klavika-regularitalic-webfont.ttf) format('truetype'), url(./fonts/klavika-regularitalic-webfont.svg#Klavika) format('svg');
+  font-weight: 400;
+  font-style: italic
+}
+
+@font-face {
+  font-family: Klavika;
+  src: url(./fonts/klavika-bold-webfont.eot);
+  src: url(./fonts/klavika-bold-webfont.eot?#iefix) format('embedded-opentype'), url(./fonts/klavika-bold-webfont.woff2) format('woff2'), url(./fonts/klavika-bold-webfont.woff) format('woff'), url(./fonts/klavika-bold-webfont.ttf) format('truetype'), url(./fonts/klavika-bold-webfont.svg#Klavika) format('svg');
+  font-weight: 700;
+  font-style: normal
+}
+
+body,
+button,
+input,
+select,
+textarea,
+#nav-main ul.sf-menu a, .kad_tagline,
+.headerfont, .tp-caption,
+h1, h2, h3, h4, h5 {
+  font-family: Klavika, Tahoma, sans-serif !important;
+}
+
+
+/* NAV MAIN */
+
+#nav-main {
+  background-color: #eeeeec;
+  margin-top: 0px !important;
+  font-size: 12.4px;
+}
+
+#nav-main ul.sf-menu a {
+  font-size: inherit !important;
+  text-transform: uppercase;
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+
+.col-md-12>#nav-main .sf-menu li {
+  max-width: 12.5%;
+  vertical-align: middle;
+}
+
+
+/* HEADER LOGO */
+
+.logo-crea {
+  height: 120px;
+  display: inline-block;
+}
+
+.kad_tagline.belowlogo-text {
+  display: table-cell;
+  height: 86px;
+  vertical-align: middle;
+  font-size: 21px;
+  text-align: left;
+  line-height: 30px;
+  border-left: 1px solid black;
+  padding-left: 15px;
+}
+
+.thelogo-text {
+  text-transform: uppercase;
+  font-family: Klavika;
+  color: black;
+  font-weight: 400;
+  /*font-size: 1.8em;*/
+  vertical-align: text-top;
+}
