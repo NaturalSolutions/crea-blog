@@ -24,25 +24,26 @@
   <div class="row">
       <div class="<?php echo esc_attr($logocclass); ?> clearfix kad-header-left">
             <div id="logo" class="logocase col-md-9">
-              <a class="brand logofont col-md-4" href="<?php echo home_url();?>/" title="Accueil" >
+              <a class="brand logofont col-lg-2 col-md-3" href="<?php echo home_url();?>/" title="Accueil" >
                 <?php if (!empty($virtue['x1_virtue_logo_upload']['url'])) { ?>
                   <div id="thelogo">
                     <img src="<?php echo esc_url($virtue['x1_virtue_logo_upload']['url']); ?>" alt="<?php bloginfo('name');?>" class="kad-standard-logo" />
                     <?php if(!empty($virtue['x2_virtue_logo_upload']['url'])) {?>
                     <img src="<?php echo esc_url($virtue['x2_virtue_logo_upload']['url']);?>" alt="<?php bloginfo('name');?>" class="kad-retina-logo" style="max-height:<?php echo esc_attr($virtue['x1_virtue_logo_upload']['height']);?>px" /> <?php } ?>
-                    <span class="thelogo-text">Le blog</sapn>
                   </div>
                 <?php } else {
                     echo apply_filters('kad_site_name', get_bloginfo('name'));
                   } ?>
               </a>
               <?php if (isset($virtue['logo_below_text']) && !empty($virtue['logo_below_text'])) { ?>
-              <div class="col-md-6">
-                <p class="kad_tagline belowlogo-text"><?php echo $virtue['logo_below_text']; ?></p>
+              <div class="col-md-7 wrapper-belowlogo">
+                <div class="wrapper-belowlogo-text">
+                  <p class="kad_tagline belowlogo-text"><?php echo $virtue['logo_below_text']; ?></p>
+                </div>
               </div>
               <?php }?>
            </div> <!-- Close #logo -->
-           <div class="col-md-2 col-sm-12 col-xs-12 col-md-offset-1 text-center">
+           <div class="wrapper-logo-crea col-md-2 col-sm-12 col-xs-12 col-md-offset-1 text-center">
            <a class="logo-crea" href="http://creamontblanc.org/" target="_blank" title="http://creamontblanc.org/" >
              <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/icon_CREA-120.png" class="" />
            </a>

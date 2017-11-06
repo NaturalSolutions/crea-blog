@@ -77,7 +77,7 @@
   src: url(./fonts/klavika-bold-webfont.eot);
   src: url(./fonts/klavika-bold-webfont.eot?#iefix) format('embedded-opentype'), url(./fonts/klavika-bold-webfont.woff2) format('woff2'), url(./fonts/klavika-bold-webfont.woff) format('woff'), url(./fonts/klavika-bold-webfont.ttf) format('truetype'), url(./fonts/klavika-bold-webfont.svg#Klavika) format('svg');
   font-weight: 700;
-  font-style: normal
+  font-style: bold
 }
 
 body,
@@ -116,19 +116,35 @@ h1, h2, h3, h4, h5 {
 /* HEADER LOGO */
 
 .logo-crea {
-  height: 120px;
+  height: 106px;
   display: inline-block;
 }
 
-.kad_tagline.belowlogo-text {
+.wrapper-belowlogo {
+  padding-left: 0px;
+}
+
+
+.kad_tagline {
+    color: black !important;
+}
+
+.wrapper-belowlogo-text {
   display: table-cell;
   height: 86px;
-  vertical-align: middle;
+  vertical-align: bottom;
+  font-size: 21px;
+  text-align: left;
+  line-height: 30px;
+}
+
+.kad_tagline.belowlogo-text {
   font-size: 21px;
   text-align: left;
   line-height: 30px;
   border-left: 1px solid black;
   padding-left: 15px;
+  margin-bottom: 4px;
 }
 
 .thelogo-text {
